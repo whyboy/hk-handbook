@@ -1,0 +1,76 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      ci_run_id:
+        description: 'Successful main CI run ID to deploy'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: production
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CI_RUN_ID: ${{ inputs.ci_run_id }}
+      DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+      DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
+    steps:
+      - name: Verify release provenance
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$CI_RUN_ID" =~ ^[0-9]+$ ]]
+          run=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$CI_RUN_ID")
+          workflow_id=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml" --jq .id)
+          jq -e --arg repo "$GITHUB_REPOSITORY" --argjson workflow "$workflow_id" '
+            .conclusion == "success" and .status == "completed" and
+            .head_branch == "main" and .head_repository.full_name == $repo and
+            .workflow_id == $workflow and (.event == "push" or .event == "workflow_dispatch")
+          ' <<< "$run" >/dev/null
+          sha=$(jq -r .head_sha <<< "$run")
+          [[ "$sha" =~ ^[0-9a-f]{40}$ ]]
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: release-${{ steps.release.outputs.sha }}
+          path: release
+          run-id: ${{ inputs.ci_run_id }}
+          github-token: ${{ github.token }}
+      - name: Upload and deploy
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$DEPLOY_HOST" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]
+          [[ "$DEPLOY_PORT" =~ ^[0-9]+$ ]]
+          test -n "$DEPLOY_KEY"
+          test -n "$KNOWN_HOSTS"
+          mkdir -p "$RUNNER_TEMP/deploy-ssh"
+          chmod 700 "$RUNNER_TEMP/deploy-ssh"
+          trap 'rm -rf "$RUNNER_TEMP/deploy-ssh"' EXIT
+          printf '%s\n' "$DEPLOY_KEY" > "$RUNNER_TEMP/deploy-ssh/key"
+          printf '%s\n' "$KNOWN_HOSTS" > "$RUNNER_TEMP/deploy-ssh/known_hosts"
+          chmod 600 "$RUNNER_TEMP/deploy-ssh/"*
+          options=(-i "$RUNNER_TEMP/deploy-ssh/key" -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$RUNNER_TEMP/deploy-ssh/known_hosts" -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=4)
+          (cd release && sha256sum --check release.zip.sha256)
+          ssh "${options[@]}" -p "$DEPLOY_PORT" "hk-deploy@$DEPLOY_HOST" "mkdir -p /srv/hk-handbook/incoming/$RELEASE_SHA"
+          scp "${options[@]}" -P "$DEPLOY_PORT" release/release.zip release/release.zip.sha256 "hk-deploy@$DEPLOY_HOST:/srv/hk-handbook/incoming/$RELEASE_SHA/"
+          ssh "${options[@]}" -p "$DEPLOY_PORT" "hk-deploy@$DEPLOY_HOST" "/usr/local/bin/hk-handbook-release $RELEASE_SHA"
+          echo "Deployed commit $RELEASE_SHA from CI run $CI_RUN_ID" >> "$GITHUB_STEP_SUMMARY"

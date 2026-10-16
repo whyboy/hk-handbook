@@ -39,6 +39,12 @@ jobs:
         run: npm run build:h5
       - name: Build WeChat mini program
         run: npm run build:mp-weixin
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: h5
+          path: frontend/dist/build/h5/
+          if-no-files-found: error
+          retention-days: 7
 
   backend:
     name: Backend checks
@@ -59,3 +65,48 @@ jobs:
           cache-dependency-path: backend/pom.xml
       - name: Build and test
         run: ./mvnw --batch-mode --no-transfer-progress clean verify
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: backend
+          path: backend/target/*.jar
+          if-no-files-found: error
+          retention-days: 7
+
+  deployment_checks:
+    name: Deployment checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Validate deployment scripts and rollback
+        run: |
+          for script in deploy/*.sh; do bash -n "$script"; done
+          python3 deploy/test_release.py
+
+  release:
+    name: Release package
+    needs: [frontend, backend, deployment_checks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: h5
+          path: frontend/dist/build/h5
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          name: backend
+          path: backend/target
+      - name: Package verified builds
+        run: bash deploy/package.sh "$GITHUB_SHA"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-${{ github.sha }}
+          path: release/
+          if-no-files-found: error
+          retention-days: 30
