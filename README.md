@@ -16,7 +16,7 @@
 frontend/       uni-app 前端，共用 src 编译 H5 与微信小程序
 backend/        Spring Boot、Maven Wrapper、SQLite 配置及集成测试
 docs/           产品需求、架构、研发流程和验证记录
-.github/        PR 模板；CI/CD 后续配置
+.github/        PR 模板和 GitHub Actions CI
 AGENTS.md       AI 开发规范
 openhands-test.md  保留的 GitHub 集成测试文件
 ```
@@ -68,6 +68,12 @@ java -jar target/hk-handbook-0.0.1-SNAPSHOT.jar
 
 产物：`frontend/dist/build/h5`、`frontend/dist/build/mp-weixin`、`backend/target/*.jar`。
 实际执行结果见 [验证记录](docs/VALIDATION.md)。微信产物构建成功不代表完成真机测试。
+
+## 自动检查（CI）
+
+向 `main` 提交 PR、更新 PR 或推送到 `main` 时，GitHub Actions 自动并行执行前端类型检查、H5／微信小程序构建和后端构建测试。CI 使用 Node.js 22、Temurin Java 21，无需生产服务器或部署密钥。
+
+在 PR 的 Checks 或仓库 Actions 页面查看结果和失败日志；修复后推送即可重新检查。主分支保护需另行在 GitHub 设置，详见 [研发流程](docs/WORKFLOW.md)。当前不包含部署或发布产物归档。
 
 ## 初始化来源
 

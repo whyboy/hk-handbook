@@ -7,5 +7,28 @@
 5. 按用户授权提交与推送，使用 PR 模板记录变更、真实验证结果和未完成事项。
 6. 人工审核后由维护者决定合并；禁止自动合并、强推和直接推送 main。
 
-初始化改动通过 PR 交由人工审核，不自动合并、不部署。CI/CD 留待后续需求配置，当前检查手动执行。
+改动通过 PR 交由人工审核，不自动合并、不部署。CI 自动运行以下检查，本地仍可执行相同命令提前验证。
 依赖变更必须同步 package-lock.json；保留 Maven Wrapper 以固定 Maven 版本。
+
+## GitHub Actions CI
+
+配置文件：`.github/workflows/ci.yml`。
+
+- 触发：目标为 `main` 的 PR（创建、重新打开、更新提交）、`main` 的 push，以及手动触发。手动入口在 workflow 合并到默认分支后可用。
+- `Frontend checks`：Node.js 22，执行 `npm ci`、`npm run type-check`、`npm run build:h5`、`npm run build:mp-weixin`。
+- `Backend checks`：Temurin Java 21，执行 `./mvnw --batch-mode --no-transfer-progress clean verify`，包含内存 SQLite 集成测试。
+- 两个任务并行运行，每个任务最多 15 分钟；同一 PR／分支有新运行时取消旧运行。
+- 缓存 npm 和 Maven 下载依赖，仍执行完整安装／构建；Actions 固定到提交 SHA，令牌仅允许读取仓库，不使用生产密钥。
+- 不设置路径过滤，文档 PR 也生成完整检查结果，避免必需检查一直等待。
+
+失败时打开 PR → Checks → 失败任务，查看具体步骤日志，使用相同命令在本地复现，修复后推送。CI 通过不代表微信真机、浏览器交互或全部业务功能已经验证。依赖审计现有问题见验证记录，本次不引入额外审计门禁。
+
+## GitHub 网站配置（维护者操作）
+
+1. 确认仓库 Settings → Actions → General 允许运行本工作流使用的 GitHub 官方 Actions。
+2. 首次 PR 的 CI 运行后，在 Settings → Rules → Rulesets 或 Branches 中为 `main` 配置保护规则（可用功能取决于仓库可见性和 GitHub 套餐）。
+3. 要求通过 PR 合并，配置人工审核；如果只有一位维护者，需考虑作者不能批准自己的 PR，避免设置无法满足的审核人数。
+4. 启用合并前必须通过状态检查，选择 `Frontend checks` 和 `Backend checks`，建议要求分支与最新 `main` 保持同步。
+5. 限制直接推送、强推和删除主分支；按团队权限控制规则绕过。
+
+仅提交 workflow 不会自动设置分支保护。本次 CI 不上传小程序、不部署服务器、不保存供 CD 使用的发布产物；CD 后续单独配置。
