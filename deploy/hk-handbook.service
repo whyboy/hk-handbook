@@ -1,0 +1,24 @@
+[Unit]
+Description=HK Handbook API
+After=network.target
+ConditionPathExists=/srv/hk-handbook/current/app.jar
+
+[Service]
+Type=simple
+User=hk-handbook
+Group=hk-deploy
+WorkingDirectory=/srv/hk-handbook/data
+EnvironmentFile=/etc/hk-handbook/runtime.env
+ExecStart=/opt/hk-handbook-java/bin/java -Xms128m -Xmx512m -jar /srv/hk-handbook/current/app.jar
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0007
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/hk-handbook/data
+
+[Install]
+WantedBy=multi-user.target

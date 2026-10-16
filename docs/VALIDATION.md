@@ -34,3 +34,30 @@
 - `npm ci` 报告 101 项依赖漏洞（20 low、23 moderate、58 high）及上游弃用提示，本次未变更依赖或执行自动修复。
 - 本地未安装 actionlint，未执行该工具检查；工作流的实际执行结果以 PR Checks 为准。
 - 未进行浏览器交互、微信真机测试、部署或 GitHub 主分支保护设置。
+
+## CD 配置本地验证（2026-10-16）
+
+分支：`chore/add-cd`。增加手动发布 workflow、发布包归档、部署与初始化脚本、数据库健康接口及相关测试。
+
+- Node.js 24.21.0 下 `npm ci`、`npm run type-check`、`npm run build:h5`、`npm run build:mp-weixin` 均通过；依赖审计仍报告 101 项（20 low、23 moderate、58 high），未修改依赖。
+- Java 21 下 `./mvnw --batch-mode --no-transfer-progress clean verify` 通过，3 项测试通过。
+- 启动真实 JAR，绑定 127.0.0.1:18080，使用临时 SQLite，HTTP `/api/health` 返回 200 和 UP；验证后已停止并清理临时数据库。
+- `python3 deploy/test_release.py`：4 项测试通过，覆盖成功发布与 SQLite 备份、升级失败回退、首次发布失败、路径越界拒绝和校验和篡改拒绝。首次运行发现无旧版时错误判定回退目标，修正后复验通过。
+- `deploy/package.sh` 使用全零测试 SHA 生成本地测试发布包，SHA256 校验通过；该包仅验证格式，不代表 main 的已验证发布版本，不用于上线。
+- 所有部署 Shell 脚本通过 `bash -n`；两个 workflow 通过 actionlint。
+- Nginx 独立临时配置通过 `nginx -t`，未加载到运行中的 Nginx。
+- 未执行服务器初始化脚本，未安装 systemd 服务或部署密钥，未配置 GitHub production 环境，未验证公网 SSH／HTTP，未运行 GitHub CD；公网地址、SSH 端口、HTTP 端口与云安全组待确认。
+
+## CD 服务器准备（2026-10-16）
+
+维护者确认使用 HTTP 8000、Java 127.0.0.1:9000，SSH 端口 22，并已在 Azure 放行 TCP 8000。
+
+- 已统一调整部署脚本、Nginx 和文档的端口。4 项部署脚本测试、Shell 语法检查、actionlint 和 `git diff --check` 均通过。
+- 已执行 `sudo bash deploy/setup-server.sh /home/whyancool/.local/share/hk-handbook-toolchain/jdk-21.0.12.1+1`，安装独立 JDK、用户、目录、systemd 单元和 Nginx 站点。sudoers 与 Nginx 检查通过，原有站点保留。
+- systemd 单元检查未报告本项目错误；工具额外输出了主机已有 v2ray 单元的 nobody 用户提示，未修改该无关服务。
+- 已验证应用用户能写 data，不能写 releases。
+- 已生成专用部署 SSH 密钥（位于仓库外），公钥带 restrict 限制；使用固定且与本机一致的主机密钥，通过目标公网 IP 验证 hk-deploy 登录、上传目录权限及仅限本项目停止／重启的 sudo 权限。
+- 已创建 GitHub production 环境，限制分支 main，设置 DEPLOY_HOST／DEPLOY_PORT 及 DEPLOY_SSH_KEY／DEPLOY_KNOWN_HOSTS。没有将密钥或实际环境文件加入仓库。
+- Nginx 正在监听 8000。从此服务器经公网 IP 请求 HTTP 得到预期 503（尚未有发布包）；这不等同于独立外网或 GitHub runner 连通性验证。
+- Java 服务已设为开机启用，但尚未启动；9000 暂无监听。未部署本地测试包、未写入生产数据库。
+- 待完成：CD 改动提交／审核／合并，main CI 构建发布包，手动触发首次 Deploy 并验证 GitHub runner SSH、真实 systemd 启动和外部访问。
