@@ -1,7 +1,7 @@
 # hk-handbook
 
 项目基础工程：微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
-当前包含官方前端示例、可启动后端及数据库健康检查，不含业务功能。
+当前前端仍为基础页面；后端已提供攻略内容接口、样稿本地预览和纠错存储。详见 [内容服务运行说明](backend/README.md)。
 
 ## 技术栈
 
@@ -47,7 +47,7 @@ cd backend
 # Windows 使用 .\mvnw.cmd spring-boot:run
 ```
 
-默认监听 8080，`PORT` 可覆盖端口。当前没有业务接口，访问 `/` 返回 404 属于预期；`GET /api/health` 检查 SQLite 连接，健康时返回 200 和 `{"status":"UP"}`，失败时返回 503。
+默认监听 8080，`PORT` 可覆盖端口。内容接口位于 `/api/guides`，访问 `/` 返回 404 属于预期；`GET /api/health` 检查 SQLite 连接，健康时返回 200 和 `{"status":"UP"}`，失败时返回 503。
 SQLite 默认在后端工作目录生成 `hk-handbook.db`（首次建立数据库连接时）；
 可通过 `DATABASE_URL=jdbc:sqlite:/绝对路径/handbook.db` 覆盖，父目录需要提前存在。
 数据库文件不会进入 Git。测试使用内存 SQLite，不污染本地数据。
