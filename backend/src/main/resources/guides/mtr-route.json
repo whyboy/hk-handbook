@@ -1,0 +1,108 @@
+{
+  "id": "mtr-route",
+  "version": 1,
+  "status": "unverified",
+  "title": "第一次乘港铁，怎样查路线和尾班车？",
+  "summary": "用港铁官方入口确认起终点、换乘和尾班车信息，避免只凭地图截图安排晚间返程。",
+  "category": "transport",
+  "audiences": [
+    "visitor",
+    "talent",
+    "family"
+  ],
+  "keywords": [
+    "港铁",
+    "地铁",
+    "路线",
+    "换乘",
+    "尾班车",
+    "末班车",
+    "MTR"
+  ],
+  "editedOn": "2026-10-17",
+  "publishedOn": null,
+  "reviewDueOn": null,
+  "approvedBy": null,
+  "publishedBy": null,
+  "withdrawalReason": null,
+  "sections": [
+    {
+      "heading": "适用条件",
+      "text": "适用于计划乘港铁、能够确定出发站和目的站的读者。本文只介绍官方信息查询，不判断入境资格、跨境通关时间、优惠资格或特殊票种是否适合你；轻铁及其他交通工具不在本次样稿的操作范围内。",
+      "kind": "editorial",
+      "sourceIds": []
+    },
+    {
+      "heading": "准备事项",
+      "text": "准备出发站、目的站、计划出行日期和大致时段，以及可联网的设备。申请材料“不适用”：这是一篇查询教程，不是购票、开户或身份办理指南；不应据此推断其他业务无需证件。",
+      "kind": "editorial",
+      "sourceIds": []
+    },
+    {
+      "heading": "操作步骤",
+      "text": "1. **选入口。** 已有 MTR Mobile 的读者，可按官方说明在首页选择 “Where to?” 进入行程规划。（S1）没有使用 App 的读者，可打开官方网页 [Route Suggestion](https://www.mtr.com.hk/en/customer/jp/index.php)，页面提供 From／To 输入与 Search。（S3）\n2. **选起终点。** 输入自己的出发站与目的站，核对方向后查询。App 官方说明列出建议路线、行程时间、车费及首尾班信息。（S1）本文没有代你查询某条具体路线。\n3. **看换乘和尾班信息。** 港铁服务时间说明介绍了换乘、预计行程时间与首尾班等查询信息，并提供独立的 [服务时间查询入口](https://www.mtr.com.hk/en/customer/services/service_hours_search.php)。（S2、S4）晚间返程时，应核对自己的起终点与方向，不把其他行程的截图当作本次结果。（编辑建议）\n4. **出发前再核实。** 重新查看官方查询结果；若页面打不开、信息不完整或看不懂换乘安排，使用下方官方说明入口重新核实，必要时在车站向工作人员确认。（编辑建议，不承诺一定赶上尾班车）",
+      "kind": "official",
+      "sourceIds": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    {
+      "heading": "费用与耗时",
+      "text": "本教程不列固定票价和车程。车费与预计行程时间应按具体起终点在官方工具中核对。（S1、S2）本文不评价优惠资格，也不把预计时间当作到达承诺。完成查询所需时间因设备、网络及熟悉程度而异，尚未实测，不虚填分钟数。",
+      "kind": "official",
+      "sourceIds": [
+        "S1",
+        "S2"
+      ]
+    },
+    {
+      "heading": "注意事项",
+      "text": "- 本次只读取了官方网页说明和入口，没有在 App 真机上操作，也没有验证动态查询返回的具体行程。\n- 网页可读取不代表每个交互功能都已测试；界面或服务有变化时以官方当前信息为准。\n- 不能用本文推断当天全网运营情况、特定车站尾班时间或某人适用的票价。\n- 官方核实入口见下方 S1–S4，查阅日期与人工核验状态分别记录。",
+      "kind": "editorial",
+      "sourceIds": []
+    },
+    {
+      "heading": "待人工核验",
+      "text": "- 个人经验：无，不编造亲历。\n- 编辑建议：出发前重新核实、按实际方向查尾班、遇疑问向工作人员确认；这些不是港铁的办理规定。\n- 待核验：由人工核对关键事实与来源，实操至少一组自己选定的起终点，记录平台、日期、所见字段和问题；由创始人评审信息顺序。以上阻塞公开发布。",
+      "kind": "unverified",
+      "sourceIds": []
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "MTR Mobile Trip Planner",
+      "url": "https://www.mtr.com.hk/mtrmobile/en/transport/trip-planner/",
+      "accessedOn": "2026-10-17",
+      "verifiedOn": null,
+      "verifiedBy": null
+    },
+    {
+      "id": "S2",
+      "title": "Service Hours",
+      "url": "https://www.mtr.com.hk/en/customer/services/train_service_index.html",
+      "accessedOn": "2026-10-17",
+      "verifiedOn": null,
+      "verifiedBy": null
+    },
+    {
+      "id": "S3",
+      "title": "Route Suggestion",
+      "url": "https://www.mtr.com.hk/en/customer/jp/index.php",
+      "accessedOn": "2026-10-17",
+      "verifiedOn": null,
+      "verifiedBy": null
+    },
+    {
+      "id": "S4",
+      "title": "Service hours search",
+      "url": "https://www.mtr.com.hk/en/customer/services/service_hours_search.php",
+      "accessedOn": "2026-10-17",
+      "verifiedOn": null,
+      "verifiedBy": null
+    }
+  ]
+}
