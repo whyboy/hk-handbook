@@ -32,7 +32,7 @@ class GuideHttpTests {
 
     @Test void correctionReturnsCreatedOnlyAfterValidSubmission() throws Exception {
         http.perform(post("/api/guides/mtr-route/corrections?preview=true").contentType("application/json")
-            .content(""" 
+            .content("""
                 {"kind":"incorrect","message":"请核查链接","referenceUrl":"https://www.mtr.com.hk/"}
                 """))
             .andExpect(status().isCreated()).andExpect(jsonPath("$.id").isString()).andExpect(jsonPath("$.status").value("received"));
