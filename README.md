@@ -99,3 +99,8 @@ export PATH="$JAVA_HOME/bin:$PATH"
 ```
 
 此路径仅适用于当前沙箱；其他开发者应使用各自安装的 JDK 21。
+
+## E01 内容规范
+
+首期分类、标签与核验流程见 [内容规范](docs/content/STANDARD.md)，配套提供 [攻略模板](docs/content/TEMPLATE.md)、[人工审核表](docs/content/CHECKLIST.md) 和 [交付记录](docs/content/E01-T02-REVIEW.md)。
+页面原型与真实样稿分别在 [Issue #9](https://github.com/whyboy/hk-handbook/issues/9)、[Issue #11](https://github.com/whyboy/hk-handbook/issues/11) 的独立 PR 评审；E01 不实现生产业务。
