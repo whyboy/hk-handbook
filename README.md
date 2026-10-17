@@ -99,3 +99,9 @@ export PATH="$JAVA_HOME/bin:$PATH"
 ```
 
 此路径仅适用于当前沙箱；其他开发者应使用各自安装的 JDK 21。
+
+## E01 产品评审原型
+
+页面流程、内容模板和交通样稿见 [原型说明](docs/prototype/README.md)。
+运行 `python3 -m http.server 4173 --bind 127.0.0.1 --directory docs/prototype` 后在同机浏览器访问 `http://127.0.0.1:4173`。
+原型独立于前后端生产工程；样稿尚待人工核验与创始人评审，不作为已发布攻略。
