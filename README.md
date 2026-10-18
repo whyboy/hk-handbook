@@ -1,7 +1,12 @@
 # hk-handbook
 
-项目基础工程：微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
-当前包含官方前端示例、可启动后端及数据库健康检查，不含业务功能。
+**港易通**（暂定名）——第一次去香港，从这里开始。
+
+面向有赴港办事、工作、生活需求的内地用户，提供实用攻略、办事导航和规则初筛，核心价值是查要求、比方案、做测评、生成清单。首期免费，聚焦银行开户匹配、高才／优才初筛与赴港办事清单，采用“首页 / 工具 / 攻略 / 我的”四个 Tab，不做社区。
+
+总体定位、MVP 范围、页面结构、增长方案和验收标准见 [产品方案](docs/PRD.md)；Epic 与 Task 的交付划分见 [研发计划](docs/ROADMAP.md)。以上是目标产品；当前工程包含官方前端示例、可启动后端及数据库健康检查，尚未实现这些业务功能。微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
+
+日常任务入口：[按 Epic 分组查看任务](https://github.com/users/whyboy/projects/4/views/3) · [执行看板](https://github.com/users/whyboy/projects/4/views/4) · [Epic 总览](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Aepic%22) · [Task 列表](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Atask%22)。打开 Epic 可查看其子任务与进度。
 
 ## 技术栈
 
