@@ -64,13 +64,14 @@
       </button>
     </view>
     <button class="all-tools" @click="openGuides">查看全部攻略示例 →</button>
+    <button class="all-tools" @click="openProfile">我的收藏与记录 →</button>
     <text class="footer-note">赴港办事，先了解，再出发。</text>
   </view>
 </template>
 
 <script setup lang="ts">
 import { guidePreviews, homeActions } from '@/features/home/content'
-import { openToolIntro, openTools, openGuide, openGuides } from '@/navigation'
+import { openToolIntro, openTools, openGuide, openGuides, openProfile } from '@/navigation'
 
 function showSearchNotice() {
   uni.showToast({ title: '搜索功能建设中', icon: 'none' })

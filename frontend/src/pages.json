@@ -35,6 +35,30 @@
       "style": {
         "navigationBarTitleText": "攻略详情"
       }
+    },
+    {
+      "path": "pages/profile/index",
+      "style": {
+        "navigationBarTitleText": "我的"
+      }
+    },
+    {
+      "path": "pages/profile/records",
+      "style": {
+        "navigationBarTitleText": "我的记录"
+      }
+    },
+    {
+      "path": "pages/profile/feedback",
+      "style": {
+        "navigationBarTitleText": "反馈"
+      }
+    },
+    {
+      "path": "pages/checklist/detail",
+      "style": {
+        "navigationBarTitleText": "清单详情"
+      }
     }
   ],
   "globalStyle": {

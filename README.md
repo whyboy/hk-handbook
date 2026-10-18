@@ -4,7 +4,7 @@
 
 面向有赴港办事、工作、生活需求的内地用户，提供实用攻略、办事导航和规则初筛，核心价值是查要求、比方案、做测评、生成清单。首期免费，聚焦银行开户匹配、高才／优才初筛与赴港办事清单，采用“首页 / 工具 / 攻略 / 我的”四个 Tab，不做社区。
 
-总体定位、MVP 范围、页面结构、增长方案和验收标准见 [产品方案](docs/PRD.md)；Epic 与 Task 的交付划分见 [研发计划](docs/ROADMAP.md)。以上是目标产品；当前已实现首页、四项工具入口、工具说明与结果空状态、攻略列表与详情示例框架，搜索、匹配、测评、清单等业务功能尚未开放；后端包含应用启动和数据库健康检查。微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
+总体定位、MVP 范围、页面结构、增长方案和验收标准见 [产品方案](docs/PRD.md)；Epic 与 Task 的交付划分见 [研发计划](docs/ROADMAP.md)。以上是目标产品；当前已实现首页、四项工具入口、工具说明与结果空状态、攻略列表与详情示例、我的与记录空页面框架，搜索、匹配、测评、清单等业务功能尚未开放；后端包含应用启动和数据库健康检查。微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
 
 日常任务入口：[按 Epic 分组查看任务](https://github.com/users/whyboy/projects/4/views/3) · [执行看板](https://github.com/users/whyboy/projects/4/views/4) · [Epic 总览](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Aepic%22) · [Task 列表](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Atask%22)。打开 Epic 可查看其子任务与进度。
 
@@ -40,7 +40,7 @@ npm run dev:h5
 npm run dev:mp-weixin
 ```
 
-首页交付范围见 [E01-T01 首页框架](docs/implementation/E01-T01.md)；工具页及走查方法见 [E01-T02 工具框架](docs/implementation/E01-T02.md)；攻略示例及状态评审入口见 [E01-T03 攻略框架](docs/implementation/E01-T03.md)。
+首页交付范围见 [E01-T01 首页框架](docs/implementation/E01-T01.md)；工具页及走查方法见 [E01-T02 工具框架](docs/implementation/E01-T02.md)；攻略示例及状态评审入口见 [E01-T03 攻略框架](docs/implementation/E01-T03.md)；我的、清单布局及反馈说明见 [E01-T04 我的框架](docs/implementation/E01-T04.md)。
 
 H5 地址以终端输出为准。微信开发者工具导入 `frontend/dist/dev/mp-weixin`，
 并在 `frontend/src/manifest.json` 的 `mp-weixin.appid` 中配置自己的小程序 AppID。
