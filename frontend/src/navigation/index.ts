@@ -4,6 +4,8 @@ import type { ToolId } from '@/features/tools/content'
 // T05 will adapt these destinations to the four-tab navigation.
 export const routes = {
   home: '/pages/index/index',
+  guides: '/pages/guides/index',
+  guideDetail: '/pages/guides/detail',
   tools: '/pages/tools/index',
   toolIntro: '/pages/tools/intro',
   toolResult: '/pages/tools/result',
@@ -32,3 +34,11 @@ function returnTo(url: string) {
 }
 export function returnHome() { returnTo(routes.home) }
 export function returnTools() { returnTo(routes.tools) }
+
+export function openGuides() {
+  uni.navigateTo({ url: routes.guides, fail: showNavigationError })
+}
+export function openGuide(id: string) {
+  uni.navigateTo({ url: `${routes.guideDetail}?id=${encodeURIComponent(id)}`, fail: showNavigationError })
+}
+export function returnGuides() { returnTo(routes.guides) }
