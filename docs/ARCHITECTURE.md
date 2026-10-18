@@ -10,7 +10,7 @@ backend（Java 21 + Spring Boot MVC）
                   SQLite 文件
 ```
 
-前后端独立运行和构建，当前保留官方示例页面，无业务 API、数据表或认证逻辑。
+前后端独立运行和构建。当前前端包含首页框架和工具用途说明承接页，使用本地静态视图模型及 uni-app 导航 API；无业务 API、数据表或认证逻辑。页面路径集中在 `frontend/src/navigation/index.ts`，T01 仅注册首页及工具说明两个页面，四 Tab 导航在后续 T05 统一。
 后端包含应用入口、数据源配置和 `/api/health`；健康接口执行 SELECT 1，测试还检查数据库外键开关及故障时的 503 响应。
 后续 API 以 /api 开头，使用 HTTP 方法及状态码表达资源操作，数据交换为 JSON。
 
