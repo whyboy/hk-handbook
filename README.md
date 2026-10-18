@@ -6,6 +6,8 @@
 
 总体定位、MVP 范围、页面结构、增长方案和验收标准见 [产品方案](docs/PRD.md)；Epic 与 Task 的交付划分见 [研发计划](docs/ROADMAP.md)。以上是目标产品；当前工程包含官方前端示例、可启动后端及数据库健康检查，尚未实现这些业务功能。微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
 
+日常任务入口：[Epic 总览](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Aepic%22) · [Task 列表](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Atask%22)。打开 Epic 可查看其子任务与进度。
+
 ## 技术栈
 
 - 前端：uni-app、Vue 3、TypeScript、Vite；npm lockfile 固定依赖。

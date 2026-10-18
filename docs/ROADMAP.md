@@ -2,6 +2,30 @@
 
 产品目标以 [PRD](PRD.md) 为准。本文只维护交付分工、依赖和 Issue 索引，具体实现机制在 Task 中。
 
+## 日常浏览入口
+
+- [Epic 总览：仅显示产品交付目标](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Aepic%22)
+- [Task 列表：仅显示具体实现任务](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Atask%22)
+- [E01 页面框架及其五个子任务](https://github.com/whyboy/hk-handbook/issues/8)
+
+Epic 使用紫色 `type:epic` 标签，Task 使用蓝色 `type:task` 标签；这些标签只表示类型，不表示任务可领取或已完成。新增 Task 需设置 `type:task` 并关联原生父 Issue，Epic 使用 `type:epic`；不要只依赖标题编号表达层级。
+
+现有 `task-ready`、`task-doing`、`task-done`、`task-failed` 属于自动化执行状态，保持独立。只有任务实际就绪时才按现有流程标记 ready，不能为了展示看板给全部 Task 批量加 ready。
+
+## Projects 视图配置（待权限开通）
+
+2026-10-18：类型标签与原生父子关系已经核验。当前 GitHub 凭据缺少 `read:project`，CLI 与 GraphQL 均拒绝读取 Projects；尚未创建或修改 Project，也未配置下列视图。配置需要当前执行凭据具备 `project` 权限，不能将此表视为已经配置完成的看板。
+
+| 视图 | 布局 | 过滤条件 | 展示与分组 |
+| --- | --- | --- | --- |
+| 产品总览 | Table | `repo:whyboy/hk-handbook is:issue label:"type:epic"` | 标题、状态、子任务完成进度；按标题排序 |
+| 任务分解 | Table | `repo:whyboy/hk-handbook is:issue label:"type:task"` | 按 Parent issue 分组；显示标题、Labels、Status、Assignees |
+| 执行看板 | Board | `repo:whyboy/hk-handbook is:issue label:"type:task"` | 按 Status 分列，卡片显示父 Issue 与状态标签 |
+
+获得权限后先检查已有项目，复用适合本仓库的项目或创建“港易通 · 产品研发”，关联仓库并添加上述 34 个 Issue。只添加项目展示关系，不更改任务状态或关闭 Issue。Project 的 Status 与自动化标签不是天然同步：未建立同步前以 Issue 标签和实际执行结果为准，不宣称自动同步已配置。
+
+视图能力参考 [GitHub 父 Issue 与子任务进度字段](https://docs.github.com/en/issues/planning-and-tracking-with-projects/understanding-fields/about-parent-issue-and-sub-issue-progress-fields)。
+
 ## 分层规则
 
 - PRD 描述希望构建的目标产品，不记录任务迁移或单次 PR 状态。
