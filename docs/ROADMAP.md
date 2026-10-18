@@ -12,17 +12,21 @@ Epic 使用紫色 `type:epic` 标签，Task 使用蓝色 `type:task` 标签；�
 
 现有 `task-ready`、`task-doing`、`task-done`、`task-failed` 属于自动化执行状态，保持独立。只有任务实际就绪时才按现有流程标记 ready，不能为了展示看板给全部 Task 批量加 ready。
 
-## Projects 视图配置（待权限开通）
+## Projects 日常工作视图
 
-2026-10-18：类型标签与原生父子关系已经核验。当前 GitHub 凭据缺少 `read:project`，CLI 与 GraphQL 均拒绝读取 Projects；尚未创建或修改 Project，也未配置下列视图。配置需要当前执行凭据具备 `project` 权限，不能将此表视为已经配置完成的看板。
+[港易通 · 产品研发](https://github.com/users/whyboy/projects/4) 已关联本仓库，包含 8 个 Epic 和 26 个 Task。项目保持私有，需使用有权访问的 GitHub 账号登录。
 
 | 视图 | 布局 | 过滤条件 | 展示与分组 |
 | --- | --- | --- | --- |
-| 产品总览 | Table | `repo:whyboy/hk-handbook is:issue label:"type:epic"` | 标题、状态、子任务完成进度；按标题排序 |
-| 任务分解 | Table | `repo:whyboy/hk-handbook is:issue label:"type:task"` | 按 Parent issue 分组；显示标题、Labels、Status、Assignees |
-| 执行看板 | Board | `repo:whyboy/hk-handbook is:issue label:"type:task"` | 按 Status 分列，卡片显示父 Issue 与状态标签 |
+| [产品总览](https://github.com/users/whyboy/projects/4/views/2) | Table | `repo:whyboy/hk-handbook is:issue label:"type:epic"` | 标题、状态、子任务完成进度；按标题排序 |
+| [任务分解](https://github.com/users/whyboy/projects/4/views/3) | Table | `repo:whyboy/hk-handbook is:issue label:"type:task"` | 按 Parent issue 分组；显示标题、Labels、Status、Assignees |
+| [执行看板](https://github.com/users/whyboy/projects/4/views/4) | Board | `repo:whyboy/hk-handbook is:issue label:"type:task"` | 按 Status 分列，卡片显示父 Issue 与状态标签 |
 
-获得权限后先检查已有项目，复用适合本仓库的项目或创建“港易通 · 产品研发”，关联仓库并添加上述 34 个 Issue。只添加项目展示关系，不更改任务状态或关闭 Issue。Project 的 Status 与自动化标签不是天然同步：未建立同步前以 Issue 标签和实际执行结果为准，不宣称自动同步已配置。
+日常优先使用“任务分解”，按父 Epic 查看其 Task；“产品总览”展示目标与子任务完成进度；“执行看板”按 Todo、In Progress、Done 分列。新增 Epic 需加入本 Project；已在 Project 内的父 Issue 新增子任务时，由原生子任务自动添加工作流收录，并应检查类型标签。
+
+初始化时，未带执行状态标签的开放 Issue 放入 Todo，表示待安排，不等于 `task-ready`，不会因此触发 Agent 领取。Project Status 与 `task-*` 标签尚未配置双向同步，实际执行状态仍以标签及验收结果为准；必要时手动同步看板状态。
+
+保留 GitHub 默认的加入项目、Issue 关闭及子任务自动添加工作流。已移除新项目默认的“Auto-close issue”“Pull request linked to issue”“Pull request merged”工作流：拖动到 Done 不会自动关闭 Issue，关联或合并 PR 也不会自动宣布业务任务验收完成。Issue 仍按各自验收标准人工关闭。
 
 视图能力参考 [GitHub 父 Issue 与子任务进度字段](https://docs.github.com/en/issues/planning-and-tracking-with-projects/understanding-fields/about-parent-issue-and-sub-issue-progress-fields)。
 
