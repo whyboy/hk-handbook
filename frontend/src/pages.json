@@ -23,6 +23,18 @@
       "style": {
         "navigationBarTitleText": "结果说明"
       }
+    },
+    {
+      "path": "pages/guides/index",
+      "style": {
+        "navigationBarTitleText": "攻略"
+      }
+    },
+    {
+      "path": "pages/guides/detail",
+      "style": {
+        "navigationBarTitleText": "攻略详情"
+      }
     }
   ],
   "globalStyle": {

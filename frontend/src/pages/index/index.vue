@@ -46,13 +46,13 @@
         <text class="section-title">热门攻略</text>
         <text class="preview-label">内容示例</text>
       </view>
-      <text class="guides-note">以下为内容方向展示，攻略尚未开放。</text>
+      <text class="guides-note">以下为框架示例，尚未核验，不作为办事依据。</text>
       <button
         v-for="guide in guidePreviews"
         :key="guide.id"
         class="guide-card button-reset"
         hover-class="pressed"
-        @click="showGuideNotice"
+        @click="openGuide(guide.id)"
       >
         <view class="guide-copy">
           <text class="guide-category">{{ guide.category }}</text>
@@ -63,21 +63,19 @@
         <view class="chevron" aria-hidden="true" />
       </button>
     </view>
+    <button class="all-tools" @click="openGuides">查看全部攻略示例 →</button>
     <text class="footer-note">赴港办事，先了解，再出发。</text>
   </view>
 </template>
 
 <script setup lang="ts">
 import { guidePreviews, homeActions } from '@/features/home/content'
-import { openToolIntro, openTools } from '@/navigation'
+import { openToolIntro, openTools, openGuide, openGuides } from '@/navigation'
 
 function showSearchNotice() {
   uni.showToast({ title: '搜索功能建设中', icon: 'none' })
 }
 
-function showGuideNotice() {
-  uni.showToast({ title: '攻略内容建设中，暂未开放', icon: 'none' })
-}
 </script>
 
 <style scoped>
