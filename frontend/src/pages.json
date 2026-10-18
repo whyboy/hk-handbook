@@ -11,6 +11,18 @@
       "style": {
         "navigationBarTitleText": "工具说明"
       }
+    },
+    {
+      "path": "pages/tools/index",
+      "style": {
+        "navigationBarTitleText": "办事工具"
+      }
+    },
+    {
+      "path": "pages/tools/result",
+      "style": {
+        "navigationBarTitleText": "结果说明"
+      }
     }
   ],
   "globalStyle": {

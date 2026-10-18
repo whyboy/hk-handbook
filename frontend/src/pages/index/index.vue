@@ -39,6 +39,8 @@
       </view>
     </view>
 
+    <button class="all-tools" @click="openTools">查看全部工具 →</button>
+
     <view class="guides-section">
       <view class="section-heading">
         <text class="section-title">热门攻略</text>
@@ -67,7 +69,7 @@
 
 <script setup lang="ts">
 import { guidePreviews, homeActions } from '@/features/home/content'
-import { openToolIntro } from '@/navigation'
+import { openToolIntro, openTools } from '@/navigation'
 
 function showSearchNotice() {
   uni.showToast({ title: '搜索功能建设中', icon: 'none' })
@@ -139,6 +141,7 @@ function showGuideNotice() {
 .task-icon-checklist { width: 19px; border: 1.8px solid currentColor; border-radius: 4px; }
 .task-icon-checklist::before { content: ''; position: absolute; top: -4px; left: 4px; width: 7px; height: 4px; border: 1.5px solid currentColor; border-radius: 2px; background: #fff; }
 .task-icon-checklist .icon-detail { position: absolute; top: 8px; left: 5px; width: 7px; height: 4px; border-left: 1.8px solid currentColor; border-bottom: 1.8px solid currentColor; transform: rotate(-45deg); }
+.all-tools { margin-top: 16px; font-size: 14px; color: #286456; background: #eaf2ee; }
 .guides-section { margin-top: 30px; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .preview-label { padding: 3px 8px; border: 1px solid #dce5df; border-radius: 5px; font-size: 11px; color: #627570; }
