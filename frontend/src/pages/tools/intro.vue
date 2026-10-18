@@ -1,39 +1,36 @@
 <template>
-  <view class="intro">
-    <text class="eyebrow">港易通 · 办事工具</text>
-    <text class="title">{{ action ? action.title : '未找到对应工具' }}</text>
-    <view class="notice">
-      <text class="notice-title">{{ action ? '功能建设中' : '入口暂不可用' }}</text>
-      <text class="description">{{ action ? action.description : '请返回首页，重新选择你想了解的办事工具。' }}</text>
-      <text v-if="action" class="availability">工具尚未开放，目前仅提供用途说明。</text>
-    </view>
-    <button class="home-button" hover-class="pressed" @click="returnHome">返回首页</button>
+  <view class="tool-page">
+    <text class="eyebrow">港易通 · 工具说明</text>
+    <text class="title">{{ tool?.title ?? (identity ? '申请身份' : '未找到对应工具') }}</text>
+    <template v-if="tool">
+      <view class="panel">
+        <text class="section-title">用途</text><text class="description">{{ tool.purpose }}</text>
+        <text class="section-title spaced">未来需要的信息</text><text class="description">{{ tool.input }}</text>
+        <text class="section-title spaced">未来可以获得什么</text><text class="description">{{ tool.output }}</text>
+      </view>
+      <button class="nav-button" disabled>功能建设中</button>
+      <text class="availability">目前仅提供用途说明，不收集答案、不执行规则。</text>
+      <button class="nav-button secondary" @click="openToolResult(tool.id)">查看结果页面说明</button>
+    </template>
+    <template v-else-if="identity">
+      <text class="description">高才与优才分别提供初筛说明，请选择想了解的路径。功能建设中。</text>
+      <button v-for="item in talentTools" :key="item.id" class="tool-card" @click="openToolIntro(item.id)">
+        <text class="section-title">{{ item.title }}</text><text class="description">{{ item.purpose }}</text>
+      </button>
+    </template>
+    <view v-else class="panel"><text class="description">入口暂不可用，请返回工具页重新选择。</text></view>
+    <button class="nav-button secondary" @click="returnTools">返回工具页</button>
+    <button class="nav-button secondary" @click="returnHome">返回首页</button>
   </view>
 </template>
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { findHomeAction } from '@/features/home/content'
-import { returnHome } from '@/navigation'
-
-const action = ref<ReturnType<typeof findHomeAction>>()
-
-onLoad((query) => {
-  action.value = findHomeAction(query?.scene)
-})
+import { findTool, tools } from '@/features/tools/content'
+import { openToolIntro, openToolResult, returnTools, returnHome } from '@/navigation'
+const tool = ref<ReturnType<typeof findTool>>()
+const identity = ref(false)
+const talentTools = tools.filter((item) => item.id === 'talent' || item.id === 'quality')
+onLoad((query) => { tool.value = findTool(query?.scene); identity.value = query?.scene === 'identity' })
 </script>
-
-<style scoped>
-.intro { max-width: 600px; margin: 0 auto; padding: 36px 20px; padding-bottom: calc(36px + env(safe-area-inset-bottom)); color: #203b38; }
-.eyebrow { display: block; font-size: 12px; color: #627570; }
-.title { display: block; margin-top: 12px; font-size: 26px; font-weight: 700; }
-.notice { margin-top: 24px; padding: 24px; border-radius: 16px; background: #eaf2ee; }
-.notice-title { display: block; font-size: 18px; font-weight: 600; }
-.description { display: block; margin-top: 12px; font-size: 15px; line-height: 1.8; }
-.availability { display: block; margin-top: 20px; font-size: 13px; line-height: 1.6; color: #627570; }
-.home-button { margin-top: 24px; border-radius: 12px; font-size: 15px; line-height: 48px; color: #fff; background: #286456; }
-.home-button::after { border: 0; }
-.home-button:focus-visible { outline: 2px solid #26766a; outline-offset: 3px; }
-.pressed { opacity: .7; }
-</style>
+<style scoped src="./tools.css"></style>
