@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "id": "mtr-route",
+  "revision": 2,
+  "status": "draft",
+  "title": "第一次乘港铁，怎样查路线和尾班车？",
+  "summary": "从港铁官方入口查询路线、换乘与首尾班信息；出发前按自己的起终点再次核实。",
+  "category": "life",
+  "audiences": [
+    "visitor",
+    "talent",
+    "family"
+  ],
+  "keywords": [
+    "港铁",
+    "地铁",
+    "路线",
+    "换乘",
+    "尾班车",
+    "末班车",
+    "MTR"
+  ],
+  "editedOn": "2026-10-19",
+  "effectivePeriod": {
+    "state": "not_stated",
+    "from": null,
+    "until": null,
+    "note": "本次读取的功能说明未注明适用于本稿的统一生效／失效日期；尚待人工确认。"
+  },
+  "reviewDueOn": null,
+  "sections": {
+    "applicability": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "editorial_advice",
+          "text": "适用于计划乘港铁、能够确定出发站和目的站的读者。本文只介绍官方信息查询，不判断入境资格、跨境通关时间、优惠资格或特殊票种是否适合你；轻铁及其他交通工具不在本次操作范围内。",
+          "factIds": [],
+          "experienceContext": null
+        }
+      ]
+    },
+    "materials": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "editorial_advice",
+          "text": "准备出发站、目的站、计划出行日期和大致时段，以及可联网的设备。申请材料不适用：这是一篇查询教程，不是购票、开户或身份办理指南；不应据此推断其他业务无需证件。",
+          "factIds": [],
+          "experienceContext": null
+        }
+      ]
+    },
+    "steps": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "选入口。已有 MTR Mobile 的读者，可按官方说明从首页的 Where to? 进入；也可使用港铁网页 Route Suggestion 的 From／To 和 Search 入口。",
+          "factIds": [
+            "f1",
+            "f4"
+          ],
+          "experienceContext": null
+        },
+        {
+          "kind": "official_fact",
+          "text": "选起终点。按官方说明选择出发站和目的站，查看建议路线、行程时间、车费及首尾班信息。这里说明功能，不提供某一条具体路线的结果。",
+          "factIds": [
+            "f2"
+          ],
+          "experienceContext": null
+        },
+        {
+          "kind": "official_fact",
+          "text": "看换乘和尾班信息。港铁服务时间说明介绍换乘等查询信息，并提供独立的服务时间查询入口。",
+          "factIds": [
+            "f3",
+            "f5"
+          ],
+          "experienceContext": null
+        },
+        {
+          "kind": "editorial_advice",
+          "text": "出发前再核实。按自己的方向和日期重新查看官方结果，不套用其他行程截图。页面打不开、信息不完整或看不懂换乘安排时，从来源入口重新核实，必要时向车站工作人员确认；不承诺一定赶上尾班车。",
+          "factIds": [],
+          "experienceContext": null
+        }
+      ]
+    },
+    "costsAndTime": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "车费和预计行程时间应按具体起终点在官方工具中核对，本稿不列固定票价和分钟数。",
+          "factIds": [
+            "f2",
+            "f3"
+          ],
+          "experienceContext": null
+        },
+        {
+          "kind": "editorial_advice",
+          "text": "本文不评价优惠资格，也不把预计时间当作到达承诺。完成查询所需时间因设备、网络和熟悉程度而异，不虚填耗时。",
+          "factIds": [],
+          "experienceContext": null
+        }
+      ]
+    },
+    "warnings": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "editorial_advice",
+          "text": "本稿基于官方功能说明，不是乘车实测。AI 查阅和浏览器自动检查不等于人工事实核验；App 真机、实际当日运营、具体票价和首尾班安排仍需核实。",
+          "factIds": [],
+          "experienceContext": null
+        },
+        {
+          "kind": "editorial_advice",
+          "text": "个人经验：无，不编造亲历。出发前再查、核对方向及询问工作人员属于编辑建议，不是官方办理规定。",
+          "factIds": [],
+          "experienceContext": null
+        },
+        {
+          "kind": "editorial_advice",
+          "text": "这份内容仍是内部草稿，人工事实核验、真实查询及产品评审未完成，不能据此作为已审核攻略公开发布。",
+          "factIds": [],
+          "experienceContext": null
+        }
+      ]
+    }
+  },
+  "facts": [
+    {
+      "id": "f1",
+      "claim": "MTR Mobile 官方说明中的行程规划入口为首页 Where to?。",
+      "conditions": "英文功能说明；中文界面和 App 版本待核对。",
+      "sourceIds": [
+        "s1"
+      ],
+      "verification": null
+    },
+    {
+      "id": "f2",
+      "claim": "App 官方说明列出起终点、建议路线、行程时间、车费和首尾班信息。",
+      "conditions": "仅描述官方介绍的字段，不提供实际路线结果。",
+      "sourceIds": [
+        "s1"
+      ],
+      "verification": null
+    },
+    {
+      "id": "f3",
+      "claim": "港铁服务时间说明介绍行程、换乘和首尾班查询信息。",
+      "conditions": "不使用平均班次表推导尾班时刻。",
+      "sourceIds": [
+        "s2"
+      ],
+      "verification": null
+    },
+    {
+      "id": "f4",
+      "claim": "网页 Route Suggestion 提供 From／To 与 Search 查询入口。",
+      "conditions": "仅确认入口，不承诺任意路线动态查询成功。",
+      "sourceIds": [
+        "s3"
+      ],
+      "verification": null
+    },
+    {
+      "id": "f5",
+      "claim": "港铁服务时间说明链接至独立的服务时间查询表单。",
+      "conditions": "不据此断言具体车站的首尾班时刻。",
+      "sourceIds": [
+        "s2",
+        "s4"
+      ],
+      "verification": null
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "organization": "港铁",
+      "title": "MTR Mobile Trip Planner",
+      "url": "https://www.mtr.com.hk/mtrmobile/en/transport/trip-planner/",
+      "locator": "Plan your trips 的第 1、2 步",
+      "scope": "App 官方功能说明，未操作 App。",
+      "consultedOn": "2026-10-19",
+      "consultedBy": "AI",
+      "effectivePeriod": {
+        "state": "not_stated",
+        "from": null,
+        "until": null,
+        "note": "本次读取的功能说明未注明适用于本稿的统一生效／失效日期；尚待人工确认。"
+      },
+      "linkCheck": null
+    },
+    {
+      "id": "s2",
+      "organization": "港铁",
+      "title": "Service Hours",
+      "url": "https://www.mtr.com.hk/en/customer/services/train_service_index.html",
+      "locator": "首段查询说明及其后的两个查询链接",
+      "scope": "只使用查询说明，不使用平均班次数值。",
+      "consultedOn": "2026-10-19",
+      "consultedBy": "AI",
+      "effectivePeriod": {
+        "state": "not_stated",
+        "from": null,
+        "until": null,
+        "note": "本次读取的功能说明未注明适用于本稿的统一生效／失效日期；尚待人工确认。"
+      },
+      "linkCheck": null
+    },
+    {
+      "id": "s3",
+      "organization": "港铁",
+      "title": "Route Suggestion",
+      "url": "https://www.mtr.com.hk/en/customer/jp/index.php",
+      "locator": "From／To／Search 区域",
+      "scope": "入口可读取，动态路线结果另行验证。",
+      "consultedOn": "2026-10-19",
+      "consultedBy": "AI",
+      "effectivePeriod": {
+        "state": "not_stated",
+        "from": null,
+        "until": null,
+        "note": "本次读取的功能说明未注明适用于本稿的统一生效／失效日期；尚待人工确认。"
+      },
+      "linkCheck": null
+    },
+    {
+      "id": "s4",
+      "organization": "港铁",
+      "title": "Service hours",
+      "url": "https://www.mtr.com.hk/en/customer/services/service_hours_search.php",
+      "locator": "服务时间查询表单",
+      "scope": "表单存在不等于具体查询结果已核验。",
+      "consultedOn": "2026-10-19",
+      "consultedBy": "AI",
+      "effectivePeriod": {
+        "state": "not_stated",
+        "from": null,
+        "until": null,
+        "note": "本次读取的功能说明未注明适用于本稿的统一生效／失效日期；尚待人工确认。"
+      },
+      "linkCheck": null
+    }
+  ],
+  "review": null,
+  "publication": null,
+  "related": []
+}

@@ -142,3 +142,12 @@
 - `git diff --check` 通过。单独完整 diff 与需求 review、公开资格边界推演记录见 [E02-T01 自查](content/E02-T01-REVIEW.md)；自查不是独立人工 APPROVED。
 - 无前后端变更，本地未运行 npm／Maven 或 H5 浏览器走查；现有 PR CI 执行前后端、部署脚本及打包检查，实际结果以对应 head 的 GitHub Checks 为准。
 - 运行时校验与查询尚未实现；未核验任何真实攻略事实，人工表为空表。#11 的人工实操、事实核验、创始人评审与 E01 微信真机／产品验收仍未完成；未部署。
+
+## E02-T02 第一版内部样稿（2026-10-19）
+
+分支：`automation/issue-11`。复用旧 PR #17 的真实港铁样稿与来源，归入 life；按 E02 契约整理 JSON 草稿并生成内部阅读 HTML，不修改生产前后端。
+
+- `python3 docs/content/render_sample.py --check`、JSON／事实来源引用、人工字段保持 null、HTML 转义、拒绝不安全 URL／已发布状态／悬空引用、43 个 Markdown 本地链接及 `git diff --check` 均通过。
+- Chromium 阅读页在 320／390／768／1280px 下草稿提示、四步骤、四来源、目录与返回顶部、无横向溢出和 JS 错误均通过；已检查 390px 截图。不是 uni-app 产品 H5 或微信真机验收。
+- 官方 S1–S4 网页文本重新读取成功；浏览器访问 S3 返回 HTTP 403 / Access Denied，未执行动态路线查询，不将读取说明当作实操通过。
+- 本地未执行 npm／Maven（无前后端变更），原有 CI 验证原工程。人工事实核验、真实查询及创始人评审仍未完成，保持 draft，未部署。详细自查见 [样稿评审记录](content/MTR-REVIEW.md)。
