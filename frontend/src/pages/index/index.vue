@@ -1,5 +1,5 @@
 <template>
-  <view class="home">
+  <PageContainer wide>
     <view class="brand">
       <view class="brand-line">
         <text class="brand-name">港易通</text>
@@ -66,10 +66,11 @@
     <button class="all-tools" @click="openGuides">查看全部攻略示例 →</button>
     <button class="all-tools" @click="openProfile">我的收藏与记录 →</button>
     <text class="footer-note">赴港办事，先了解，再出发。</text>
-  </view>
+  </PageContainer>
 </template>
 
 <script setup lang="ts">
+import PageContainer from '@/components/PageContainer.vue'
 import { guidePreviews, homeActions } from '@/features/home/content'
 import { openToolIntro, openTools, openGuide, openGuides, openProfile } from '@/navigation'
 
@@ -80,13 +81,7 @@ function showSearchNotice() {
 </script>
 
 <style scoped>
-.home {
-  max-width: 840px;
-  margin: 0 auto;
-  padding: 28px 20px 32px;
-  padding-bottom: calc(32px + env(safe-area-inset-bottom));
-  color: #203b38;
-}
+
 .brand { margin-bottom: 24px; }
 .brand-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
 .brand-name { font-size: 26px; font-weight: 700; letter-spacing: 1px; }
@@ -155,13 +150,13 @@ function showSearchNotice() {
 .footer-note { display: block; margin-top: 28px; font-size: 11px; text-align: center; letter-spacing: 1px; color: #627570; }
 .pressed { opacity: .7; }
 @media (min-width: 640px) {
-  .home { padding-top: 36px; }
+
   .task-section { padding: 26px; }
   .task-grid { gap: 14px; }
   .task-card { padding-top: 24px; padding-bottom: 20px; }
 }
 @media (max-width: 350px) {
-  .home { padding-left: 14px; padding-right: 14px; }
+
   .task-section { padding-left: 10px; padding-right: 10px; }
   .section-title { font-size: 19px; }
   .search { padding-left: 12px; padding-right: 12px; }
