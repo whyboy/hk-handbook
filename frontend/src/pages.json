@@ -66,5 +66,37 @@
     "navigationBarTitleText": "港易通",
     "navigationBarBackgroundColor": "#F7F9F6",
     "backgroundColor": "#F7F9F6"
+  },
+  "tabBar": {
+    "color": "#627570",
+    "selectedColor": "#286456",
+    "backgroundColor": "#F7F9F6",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-selected.png"
+      },
+      {
+        "pagePath": "pages/tools/index",
+        "text": "工具",
+        "iconPath": "static/tabs/tools.png",
+        "selectedIconPath": "static/tabs/tools-selected.png"
+      },
+      {
+        "pagePath": "pages/guides/index",
+        "text": "攻略",
+        "iconPath": "static/tabs/guides.png",
+        "selectedIconPath": "static/tabs/guides-selected.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "static/tabs/profile.png",
+        "selectedIconPath": "static/tabs/profile-selected.png"
+      }
+    ]
   }
 }

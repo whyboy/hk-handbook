@@ -1,5 +1,5 @@
 <template>
-  <view class="tool-page">
+  <PageContainer>
     <text class="eyebrow">港易通 · 工具结果</text>
     <text class="title">{{ tool ? `${tool.title} · 结果说明` : '未找到对应工具' }}</text>
     <view class="panel">
@@ -9,9 +9,10 @@
     </view>
     <button class="nav-button secondary" @click="returnTools">返回工具页</button>
     <button class="nav-button secondary" @click="returnHome">返回首页</button>
-  </view>
+  </PageContainer>
 </template>
 <script setup lang="ts">
+import PageContainer from '@/components/PageContainer.vue'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { findTool } from '@/features/tools/content'
