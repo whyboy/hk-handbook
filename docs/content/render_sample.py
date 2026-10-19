@@ -38,13 +38,22 @@ def render(data):
             if any(sid not in sources for sid in source_ids):
                 raise ValueError('Unresolved source reference')
             kind = {'official_fact': '官方说明', 'editorial_advice': '编辑建议', 'personal_experience': '个人经验'}[block['kind']]
+            fact_links = '、'.join(f'<a href="#fact-{esc(fid)}">{esc(fid.upper())}</a>' for fid in block['factIds'])
+            if fact_links:
+                links = f'事实 {fact_links}；来源 {links}'
             text = f'{esc(block["text"])} <small>（{kind}{"；" + links if links else ""}）</small>'
             parts.append(f'<li>{text}</li>' if key == 'steps' else f'<p>{text}</p>')
         content = ''.join(parts)
         if key == 'steps':
             content = f'<ol>{content}</ol>'
         sections.append(f'<section><h2 id="{key}">{label}</h2>{content}</section>')
-    source_html = ''.join(f'<li id="{esc(s["id"])}">{esc(s["id"].upper())} · <a href="{esc(s["url"])}">{esc(s["organization"])} {esc(s["title"])}</a><p>{esc(s["scope"])} AI 查阅：{esc(s["consultedOn"])}；人工核验未执行。</p></li>' for s in sources.values())
+    fact_html = []
+    for fact in facts.values():
+        if any(sid not in sources for sid in fact['sourceIds']):
+            raise ValueError('Unresolved source reference')
+        links = '、'.join(f'<a href="#{esc(sid)}">{esc(sid.upper())}</a>' for sid in fact['sourceIds'])
+        fact_html.append(f'<li id="fact-{esc(fact["id"])}"><strong>{esc(fact["id"].upper())} · {esc(fact["claim"])}</strong><p>适用条件：{esc(fact["conditions"])}</p><p>依据：{links} · 人工核验待完成</p></li>')
+    source_html = ''.join(f'<li id="{esc(s["id"])}">{esc(s["id"].upper())} · <a href="{esc(s["url"])}">{esc(s["organization"])} {esc(s["title"])}</a><p>原文位置：{esc(s["locator"])}</p><p>{esc(s["scope"])} AI 查阅：{esc(s["consultedOn"])}；人工核验未执行。</p></li>' for s in sources.values())
     return f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>{esc(data['title'])} · 内部阅读样稿</title>
@@ -62,8 +71,9 @@ li {{margin-bottom:12px}} ol,ul {{padding-left:1.6rem}} footer {{border-top:1px 
 <article><p class="meta">生活落地 · 交通 · 游客／人才用户／家庭 · {esc(data['id'])} · 版本 {esc(data['revision'])}</p>
 <h1>{esc(data['title'])}</h1><p>{esc(data['summary'])}</p>
 <p class="meta">编辑：{esc(data['editedOn'])} · 发布日期：无 · 人工事实核验日期：无</p>
-<nav aria-label="文章目录">{nav}<a href="#sources">官方来源</a></nav>
+<nav aria-label="文章目录">{nav}<a href="#facts">逐条事实依据</a><a href="#sources">官方来源</a></nav>
 {''.join(sections)}
+<section><h2 id="facts">逐条事实依据</h2><p>核对每条说明的适用条件，再打开对应来源查阅原文。以下是待核验事实，不代表人工审核通过。</p><ul>{''.join(fact_html)}</ul></section>
 <section><h2 id="sources">官方来源与核验状态</h2><p>生效／失效日期：官方说明未提供统一期限，仍需人工核实；不得用查阅日期代替。</p><ul>{source_html}</ul></section>
 <footer><p>仅用于 E02-T02 第一版内部阅读评审。此文件从 JSON 生成，不单独修改正文。</p>
 <p><a href="../mtr-route.json">完整 JSON 草稿</a> · <a href="../MTR-SOURCES.md">事实账本</a> · <a href="../MTR-REVIEW.md">评审记录</a> · <a href="#top">返回顶部</a></p></footer>

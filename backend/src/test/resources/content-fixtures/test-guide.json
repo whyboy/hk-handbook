@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "id": "test-guide",
+  "revision": 1,
+  "status": "published",
+  "title": "测试路线 MTR",
+  "summary": "Synthetic guide for automated tests only",
+  "category": "life",
+  "audiences": [
+    "visitor"
+  ],
+  "keywords": [
+    "路线",
+    "MTR"
+  ],
+  "editedOn": "2026-10-18",
+  "effectivePeriod": {
+    "state": "not_stated",
+    "from": null,
+    "until": null,
+    "note": "Synthetic fixture only"
+  },
+  "reviewDueOn": "2026-10-21",
+  "sections": {
+    "applicability": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "Synthetic test statement",
+          "factIds": [
+            "f1"
+          ],
+          "experienceContext": null
+        }
+      ]
+    },
+    "materials": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "Synthetic test statement",
+          "factIds": [
+            "f1"
+          ],
+          "experienceContext": null
+        }
+      ]
+    },
+    "steps": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "Synthetic test statement",
+          "factIds": [
+            "f1"
+          ],
+          "experienceContext": null
+        }
+      ]
+    },
+    "costsAndTime": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "Synthetic test statement",
+          "factIds": [
+            "f1"
+          ],
+          "experienceContext": null
+        }
+      ]
+    },
+    "warnings": {
+      "state": "known",
+      "reason": null,
+      "blocks": [
+        {
+          "kind": "official_fact",
+          "text": "Synthetic test statement",
+          "factIds": [
+            "f1"
+          ],
+          "experienceContext": null
+        }
+      ]
+    }
+  },
+  "facts": [
+    {
+      "id": "f1",
+      "claim": "Synthetic claim",
+      "conditions": "Automated tests only",
+      "sourceIds": [
+        "s1"
+      ],
+      "verification": {
+        "human": "test-reviewer",
+        "evidence": "TEST ONLY - not real human evidence",
+        "verifiedOn": "2026-10-18",
+        "result": "passed",
+        "revision": 1,
+        "reviewDueOn": "2026-10-21"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "s1",
+      "organization": "Test organization",
+      "title": "Test source",
+      "url": "https://example.org/test",
+      "locator": "Test paragraph",
+      "scope": "Test scope",
+      "consultedOn": "2026-10-18",
+      "consultedBy": "test-reader",
+      "effectivePeriod": {
+        "state": "not_stated",
+        "from": null,
+        "until": null,
+        "note": "Synthetic fixture only"
+      },
+      "linkCheck": {
+        "human": "test-reviewer",
+        "evidence": "TEST ONLY - not real human evidence",
+        "checkedOn": "2026-10-18",
+        "result": "valid",
+        "reviewDueOn": "2026-10-21"
+      }
+    }
+  ],
+  "review": {
+    "human": "test-reviewer",
+    "evidence": "TEST ONLY - not real human evidence",
+    "reviewedOn": "2026-10-18",
+    "result": "approved",
+    "revision": 1,
+    "rolesNote": "Synthetic test roles"
+  },
+  "publication": {
+    "human": "test-reviewer",
+    "evidence": "TEST ONLY - not real human evidence",
+    "publishedOn": "2026-10-18",
+    "revision": 1
+  },
+  "related": [
+    {
+      "type": "checklist",
+      "id": "not-available",
+      "version": 1
+    }
+  ]
+}

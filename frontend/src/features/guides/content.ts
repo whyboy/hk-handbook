@@ -1,14 +1,30 @@
-// Layout samples only; never represent verified advice or published content.
-export const categories = ['全部', '银行卡', '手机卡', '人才身份', '生活落地'] as const
-export type Category = (typeof categories)[number]
-export const guideSamples = [
-  { id: 'bank-preparation', category: '银行卡', title: '香港银行卡开户，先准备什么？', summary: '示例摘要：这里将介绍开户准备的内容结构。' },
-  { id: 'mobile-preparation', category: '手机卡', title: '赴港通信，先了解哪些事项？', summary: '示例摘要：这里将介绍通信准备的内容结构。' },
-  { id: 'talent-paths', category: '人才身份', title: '高才通 A / B / C 类路径说明', summary: '示例摘要：这里将介绍人才路径的内容结构。' },
-  { id: 'first-visit', category: '生活落地', title: '第一次赴港，把准备事项列清楚', summary: '示例摘要：这里将介绍首次赴港准备的内容结构。' },
+export const categories = [
+  { id: '', label: '全部' }, { id: 'bank', label: '银行卡' },
+  { id: 'phone', label: '手机卡' }, { id: 'talent', label: '人才身份' },
+  { id: 'life', label: '生活落地' },
 ] as const
-export function findGuide(value: unknown) { return guideSamples.find((guide) => guide.id === value) }
-export type DisplayState = 'ready' | 'loading' | 'empty' | 'error'
-export function parseDisplayState(value: unknown): DisplayState {
-  return value === 'loading' || value === 'empty' || value === 'error' ? value : 'ready'
-}
+export const audiences = [
+  { id: '', label: '所有人群' }, { id: 'visitor', label: '游客' },
+  { id: 'talent', label: '人才用户' }, { id: 'family', label: '家庭' },
+] as const
+export type Category = (typeof categories)[number]['id']
+export type Audience = (typeof audiences)[number]['id']
+export interface GuideFilters { category: Category; audience: Audience; q: string }
+export const categoryLabel = (id: string) => categories.find(item => item.id === id)?.label ?? '攻略'
+export const audienceLabel = (id: string) => audiences.find(item => item.id === id)?.label ?? id
+export const sections = [
+  { id: 'applicability', label: '适用条件' }, { id: 'materials', label: '准备事项与材料' },
+  { id: 'steps', label: '操作步骤' }, { id: 'costsAndTime', label: '费用与耗时' },
+  { id: 'warnings', label: '注意事项' },
+] as const
+export type SectionId = (typeof sections)[number]['id']
+
+// switchTab cannot carry query parameters; consume this in-memory handoff once.
+let pendingFilters: Partial<GuideFilters> | undefined
+export function setGuideFilters(filters: Partial<GuideFilters>) { pendingFilters = { ...filters } }
+export function takeGuideFilters() { const next = pendingFilters; pendingFilters = undefined; return next }
+// Some platforms recreate Tab pages after returning from a directly opened page.
+// Keep only the active filters in memory; never persist article bodies or search input.
+let currentFilters: GuideFilters = { category: '', audience: '', q: '' }
+export function rememberGuideFilters(filters: GuideFilters) { currentFilters = { ...filters } }
+export function rememberedGuideFilters(): GuideFilters { return { ...currentFilters } }
