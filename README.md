@@ -59,6 +59,10 @@ SQLite 默认在后端工作目录生成 `hk-handbook.db`（首次建立数据�
 可通过 `DATABASE_URL=jdbc:sqlite:/绝对路径/handbook.db` 覆盖，父目录需要提前存在。
 数据库文件不会进入 Git。测试使用内存 SQLite，不污染本地数据。
 
+## 内容维护
+
+E02 内容字段、四分类、日期与人工发布门槛见 [内容规范](docs/content/STANDARD.md)。复制 JSON 模板并通过 PR 附逐条人工核验记录；模板不是已发布攻略。当前仅交付契约，生产内容加载、REST 查询与页面接入尚未实现。
+
 ## 构建与测试
 
 ```bash
