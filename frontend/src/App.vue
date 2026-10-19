@@ -16,4 +16,13 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   line-height: 1.5;
 }
+/* #ifdef H5 */
+/* Keep desktop navigation within the same reading area as the pages. */
+@media (min-width: 760px) {
+  .uni-tabbar-bottom .uni-tabbar {
+    padding-left: calc((100% - 760px) / 2);
+    padding-right: calc((100% - 760px) / 2);
+  }
+}
+/* #endif */
 </style>
