@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "replace-with-stable-id",
+  "revision": 1,
+  "status": "draft",
+  "title": "填写一个具体问题；本文件是模板，不是攻略",
+  "summary": "复制后填写，不能直接作为生产数据发布。",
+  "category": "life",
+  "audiences": ["visitor"],
+  "keywords": ["填写关键词"],
+  "editedOn": "2026-10-19",
+  "effectivePeriod": {"state": "unknown", "from": null, "until": null, "note": "尚未收集官方生效信息"},
+  "reviewDueOn": null,
+  "sections": {
+    "applicability": {"state": "unknown", "reason": "尚未填写适用对象、条件及例外", "blocks": []},
+    "materials": {"state": "unknown", "reason": "尚未核对准备与材料，不代表无需材料", "blocks": []},
+    "steps": {"state": "unknown", "reason": "尚未整理实际步骤", "blocks": []},
+    "costsAndTime": {"state": "unknown", "reason": "尚未核对费用、币种、收费条件和耗时，不代表免费", "blocks": []},
+    "warnings": {"state": "unknown", "reason": "尚未核对注意事项", "blocks": []}
+  },
+  "facts": [],
+  "sources": [],
+  "review": null,
+  "publication": null,
+  "related": []
+}
