@@ -11,6 +11,7 @@
       <button class="nav-button" disabled>功能建设中</button>
     </template>
     <text v-else class="notice">没有可显示的清单。请返回清单列表查看布局示例。</text>
+    <button class="nav-button" @click="openGuides({ category: 'life' })">查看生活落地攻略</button>
     <button class="nav-button" @click="returnChecklists">返回清单列表</button>
     <button class="nav-button" @click="returnProfile">返回我的</button>
     <button class="nav-button" @click="returnHome">返回首页</button>
@@ -22,7 +23,7 @@ import PageContainer from '@/components/PageContainer.vue'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { checklistStages } from '@/features/profile/content'
-import { returnChecklists, returnProfile, returnHome } from '@/navigation'
+import { openGuides, returnChecklists, returnProfile, returnHome } from '@/navigation'
 const preview = ref(false)
 onLoad((query) => { preview.value = query?.demo === 'layout' && !query?.id })
 </script>

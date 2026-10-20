@@ -1,3 +1,4 @@
+import { setGuideFilters, takeGuideFilters, type GuideFilters } from '@/features/guides/content'
 import type { RecordSectionId } from '@/features/profile/content'
 import type { HomeActionId } from '@/features/home/content'
 import type { ToolId } from '@/features/tools/content'
@@ -39,8 +40,9 @@ function returnTo(url: TabRoute) {
 export function returnHome() { returnTo(routes.home) }
 export function returnTools() { returnTo(routes.tools) }
 
-export function openGuides() {
-  switchTab(routes.guides)
+export function openGuides(filters?: Partial<GuideFilters>) {
+  if (filters) setGuideFilters(filters)
+  uni.switchTab({ url: routes.guides, fail: () => { takeGuideFilters(); showNavigationError() } })
 }
 export function openGuide(id: string) {
   uni.navigateTo({ url: `${routes.guideDetail}?id=${encodeURIComponent(id)}`, fail: showNavigationError })

@@ -25,24 +25,3 @@ export type HomeActionId = (typeof homeActions)[number]['id']
 export function findHomeAction(value: unknown) {
   return homeActions.find((action) => action.id === value)
 }
-
-export const guidePreviews = [
-  {
-    id: 'bank-preparation',
-    category: '银行开户',
-    title: '香港银行卡开户，先准备什么？',
-    summary: '从资料准备开始，了解出发前需要核实的事项。',
-  },
-  {
-    id: 'talent-paths',
-    category: '人才身份',
-    title: '高才通 A / B / C 类路径说明',
-    summary: '先了解不同申请路径，再查看适用条件。',
-  },
-  {
-    id: 'first-visit',
-    category: '生活落地',
-    title: '第一次赴港，把准备事项列清楚',
-    summary: '从出发前准备，到通信、交通与办事安排。',
-  },
-] as const

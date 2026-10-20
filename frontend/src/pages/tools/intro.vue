@@ -19,6 +19,7 @@
       </button>
     </template>
     <ContentCard v-else><text class="description">入口暂不可用，请返回工具页重新选择。</text></ContentCard>
+    <button v-if="tool || identity" class="nav-button secondary" @click="openGuides({ category: tool?.id === 'bank' ? 'bank' : tool?.id === 'checklist' ? 'life' : 'talent' })">查看相关攻略</button>
     <button class="nav-button secondary" @click="returnTools">返回工具页</button>
     <button class="nav-button secondary" @click="returnHome">返回首页</button>
   </PageContainer>
@@ -29,7 +30,7 @@ import PageContainer from '@/components/PageContainer.vue'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { findTool, tools } from '@/features/tools/content'
-import { openToolIntro, openToolResult, returnTools, returnHome } from '@/navigation'
+import { openToolIntro, openToolResult, openGuides, returnTools, returnHome } from '@/navigation'
 const tool = ref<ReturnType<typeof findTool>>()
 const identity = ref(false)
 const talentTools = tools.filter((item) => item.id === 'talent' || item.id === 'quality')

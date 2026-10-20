@@ -8,10 +8,10 @@
       <text class="slogan">第一次去香港，从这里开始。</text>
     </view>
 
-    <button class="search button-reset" hover-class="pressed" @click="showSearchNotice">
+    <button class="search button-reset" hover-class="pressed" @click="openGuides({})">
       <view class="search-icon" aria-hidden="true" />
       <text class="search-label">搜索：香港银行卡 / 高才 / 手机卡</text>
-      <text class="search-status">建设中</text>
+      <text class="search-status">搜索攻略</text>
     </button>
 
     <view class="task-section">
@@ -43,10 +43,15 @@
 
     <view class="guides-section">
       <view class="section-heading">
-        <text class="section-title">热门攻略</text>
-        <text class="preview-label">内容示例</text>
+        <text class="section-title">最新攻略</text>
+        <text class="preview-label">已发布内容</text>
       </view>
-      <text class="guides-note">以下为框架示例，尚未核验，不作为办事依据。</text>
+      <text class="guides-note">了解适用条件，查看官方来源，出发前再核实。</text>
+      <PageState v-if="guideState === 'loading'" kind="loading" title="正在加载攻略" description="请稍候…" />
+      <PageState v-else-if="guideState === 'error'" kind="error" title="攻略加载失败" description="请检查网络后重试。">
+        <button class="all-tools" @click="loadGuides">重试</button>
+      </PageState>
+      <PageState v-else-if="!guidePreviews.length" kind="empty" title="暂无已发布攻略" description="攻略正在整理与核验中，发布后会在这里显示。" />
       <button
         v-for="guide in guidePreviews"
         :key="guide.id"
@@ -55,29 +60,43 @@
         @click="openGuide(guide.id)"
       >
         <view class="guide-copy">
-          <text class="guide-category">{{ guide.category }}</text>
+          <text class="guide-category">{{ categoryLabel(guide.category) }}</text>
           <text class="guide-title">{{ guide.title }}</text>
           <text class="guide-summary">{{ guide.summary }}</text>
-          <text class="guide-status">示例 · 尚未核验</text>
+          <text class="guide-status">事实核验：{{ guide.verifiedOn }}</text>
         </view>
         <view class="chevron" aria-hidden="true" />
       </button>
     </view>
-    <button class="all-tools" @click="openGuides">查看全部攻略示例 →</button>
+    <button class="all-tools" @click="openGuides({})">查看全部攻略 →</button>
     <button class="all-tools" @click="openProfile">我的收藏与记录 →</button>
     <text class="footer-note">赴港办事，先了解，再出发。</text>
   </PageContainer>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { onShow, onHide, onUnload } from '@dcloudio/uni-app'
 import PageContainer from '@/components/PageContainer.vue'
-import { guidePreviews, homeActions } from '@/features/home/content'
+import PageState from '@/components/PageState.vue'
+import { homeActions } from '@/features/home/content'
+import { categoryLabel } from '@/features/guides/content'
+import { getGuides, type GuideSummary } from '@/features/guides/api'
 import { openToolIntro, openTools, openGuide, openGuides, openProfile } from '@/navigation'
-
-function showSearchNotice() {
-  uni.showToast({ title: '搜索功能建设中', icon: 'none' })
+const guidePreviews = ref<GuideSummary[]>([])
+const guideState = ref<'loading' | 'ready' | 'error'>('loading')
+let generation = 0
+async function loadGuides() {
+  const requestId = ++generation; guidePreviews.value = []; guideState.value = 'loading'
+  try {
+    const result = await getGuides({}, 1, 3)
+    if (requestId !== generation) return
+    guidePreviews.value = result.items; guideState.value = 'ready'
+  } catch { if (requestId === generation) guideState.value = 'error' }
 }
-
+onShow(loadGuides)
+function invalidate() { generation++; guidePreviews.value = []; guideState.value = 'loading' }
+onHide(invalidate); onUnload(invalidate)
 </script>
 
 <style scoped>
