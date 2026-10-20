@@ -1,6 +1,7 @@
 import { categories, audiences, sections, type GuideFilters, type SectionId } from './content'
 export interface Period { state: 'known' | 'not_stated'; from: string | null; until: string | null }
 export interface GuideSummary {
+  matchExcerpt?: string
   id: string; revision: number; title: string; summary: string; category: string; audiences: string[]
   keywords: string[]; editedOn: string; reviewDueOn: string; publishedOn: string; verifiedOn: string; effectivePeriod: Period
 }
@@ -22,7 +23,7 @@ const date = (v: unknown) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test
 const strings = (v: unknown): v is string[] => Array.isArray(v) && v.every(text)
 const period = (v: unknown) => record(v) && ['known', 'not_stated'].includes(v.state) && (v.from === null || date(v.from)) && (v.until === null || date(v.until))
 function summary(v: unknown): v is GuideSummary {
-  return record(v) && text(v.id) && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.id) && Number.isInteger(v.revision) && v.revision > 0 && text(v.title) && text(v.summary)
+  return record(v) && (v.matchExcerpt === undefined || text(v.matchExcerpt)) && text(v.id) && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.id) && Number.isInteger(v.revision) && v.revision > 0 && text(v.title) && text(v.summary)
     && categories.some(c => c.id !== '' && c.id === v.category) && strings(v.audiences) && v.audiences.length > 0 && v.audiences.every(a => audiences.some(item => item.id !== '' && item.id === a))
     && strings(v.keywords) && ['editedOn', 'reviewDueOn', 'publishedOn', 'verifiedOn'].every(key => date(v[key])) && period(v.effectivePeriod)
 }
@@ -55,7 +56,7 @@ async function request(path: string): Promise<unknown> {
   })
 }
 export async function getGuides(filters: Partial<GuideFilters> = {}, page = 1, size = 20): Promise<GuidePage> {
-  const params = { category: filters.category ?? '', audience: filters.audience ?? '', q: filters.q?.trim() ?? '', page, size }
+  const params = { category: filters.category ?? '', q: filters.q?.trim() ?? '', page, size }
   const query = Object.entries(params).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&')
   const data = await request(`?${query}`)
   if (!record(data) || !Array.isArray(data.items) || !data.items.every(summary) || !Number.isInteger(data.total) || data.total < 0 || data.page !== page || data.size !== size) throw new GuideError(0, '攻略数据暂不可用，请稍后重试。')

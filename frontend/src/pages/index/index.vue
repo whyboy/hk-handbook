@@ -43,7 +43,7 @@
 
     <view class="guides-section">
       <view class="section-heading">
-        <text class="section-title">最新攻略</text>
+        <text class="section-title">推荐攻略</text>
         <text class="preview-label">已发布内容</text>
       </view>
       <text class="guides-note">了解适用条件，查看官方来源，出发前再核实。</text>

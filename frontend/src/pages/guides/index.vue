@@ -11,9 +11,6 @@
     <view class="categories" aria-label="攻略分类">
       <button v-for="item in categories" :key="item.id" :class="['category', { selected: filters.category === item.id }]" @click="chooseCategory(item.id)">{{ item.label }}</button>
     </view>
-    <view class="categories" aria-label="适用人群">
-      <button v-for="item in audiences" :key="item.id" :class="['category', { selected: filters.audience === item.id }]" @click="chooseAudience(item.id)">{{ item.label }}</button>
-    </view>
     <button v-if="filtered" class="nav-button" @click="clearFilters">清除筛选</button>
     <PageState v-if="state === 'loading'" kind="loading" title="正在查找攻略" description="请稍候…" />
     <PageState v-else-if="state === 'error'" kind="error" title="攻略加载失败" :description="errorMessage">
@@ -21,11 +18,11 @@
     </PageState>
     <PageState v-else-if="!items.length" kind="empty" :title="filtered ? '没有找到相关攻略' : '暂无已发布攻略'" :description="filtered ? '试试其他关键词，或清除筛选查看全部攻略。' : '攻略正在整理与核验中，发布后会在这里显示。'" />
     <template v-else>
-      <text class="eyebrow result-count">共 {{ total }} 篇攻略</text>
+      <text class="eyebrow result-count">{{ filters.q ? '搜索结果' : '推荐攻略' }} · 共 {{ total }} 篇攻略</text>
       <button v-for="guide in items" :key="guide.id" class="guide-card" @click="openGuide(guide.id)">
-        <text class="eyebrow">{{ categoryLabel(guide.category) }} · {{ guide.audiences.map(audienceLabel).join(' / ') }}</text>
+        <text class="eyebrow">{{ categoryLabel(guide.category) }}</text>
         <text class="section-title">{{ guide.title }}</text>
-        <text class="description">{{ guide.summary }}</text>
+        <text class="description">{{ guide.matchExcerpt || guide.summary }}</text>
         <text class="sample-label">事实核验：{{ guide.verifiedOn }}</text>
       </button>
       <text v-if="moreError" class="notice">加载更多失败，已有结果保留，请重试。</text>
@@ -39,14 +36,14 @@ import PageState from '@/components/PageState.vue'
 import PageContainer from '@/components/PageContainer.vue'
 import { computed, reactive, ref } from 'vue'
 import { onLoad, onShow, onHide, onUnload } from '@dcloudio/uni-app'
-import { categories, audiences, categoryLabel, audienceLabel, takeGuideFilters, rememberGuideFilters, rememberedGuideFilters, type Category, type Audience, type GuideFilters } from '@/features/guides/content'
+import { categories, categoryLabel, takeGuideFilters, rememberGuideFilters, rememberedGuideFilters, type Category, type GuideFilters } from '@/features/guides/content'
 import { getGuides, GuideError, type GuideSummary } from '@/features/guides/api'
 import { openGuide, returnHome } from '@/navigation'
 const filters = reactive<GuideFilters>(rememberedGuideFilters())
 const keyword = ref(''), items = ref<GuideSummary[]>([]), total = ref(0), page = ref(0)
 const state = ref<'loading' | 'ready' | 'error'>('loading')
 const errorMessage = ref(''), loadingMore = ref(false), moreError = ref(false)
-const filtered = computed(() => Boolean(filters.category || filters.audience || filters.q))
+const filtered = computed(() => Boolean(filters.category || filters.q))
 let generation = 0
 async function load(more = false) {
   if (more && (loadingMore.value || state.value !== 'ready')) return
@@ -72,11 +69,9 @@ function submitSearch(event: unknown) {
   if (typeof value === 'string') search(value)
 }
 function chooseCategory(value: Category) { filters.category = value; load() }
-function chooseAudience(value: Audience) { filters.audience = value; load() }
-function clearFilters() { Object.assign(filters, { category: '', audience: '', q: '' }); keyword.value = ''; load() }
+function clearFilters() { Object.assign(filters, { category: '', q: '' }); keyword.value = ''; load() }
 onLoad(query => {
   if (query?.category !== undefined) filters.category = categories.find(c => c.id === query.category)?.id ?? ''
-  if (query?.audience !== undefined) filters.audience = audiences.find(a => a.id === query.audience)?.id ?? ''
   keyword.value = typeof query?.q === 'string' ? [...query.q].slice(0, 100).join('') : filters.q
   filters.q = keyword.value.trim()
   rememberGuideFilters(filters)
@@ -84,7 +79,7 @@ onLoad(query => {
 onShow(() => {
   Object.assign(filters, rememberedGuideFilters()); keyword.value = filters.q
   const next = takeGuideFilters()
-  if (next) { Object.assign(filters, { category: '', audience: '', q: '' }, next); keyword.value = filters.q }
+  if (next) { Object.assign(filters, { category: '', q: '' }, next); keyword.value = filters.q }
   load()
 })
 function invalidate() { generation++; items.value = []; total.value = 0; loadingMore.value = false; state.value = 'loading' }

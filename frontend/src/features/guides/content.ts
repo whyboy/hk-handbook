@@ -9,7 +9,7 @@ export const audiences = [
 ] as const
 export type Category = (typeof categories)[number]['id']
 export type Audience = (typeof audiences)[number]['id']
-export interface GuideFilters { category: Category; audience: Audience; q: string }
+export interface GuideFilters { category: Category; q: string }
 export const categoryLabel = (id: string) => categories.find(item => item.id === id)?.label ?? '攻略'
 export const audienceLabel = (id: string) => audiences.find(item => item.id === id)?.label ?? id
 export const sections = [
@@ -25,6 +25,6 @@ export function setGuideFilters(filters: Partial<GuideFilters>) { pendingFilters
 export function takeGuideFilters() { const next = pendingFilters; pendingFilters = undefined; return next }
 // Some platforms recreate Tab pages after returning from a directly opened page.
 // Keep only the active filters in memory; never persist article bodies or search input.
-let currentFilters: GuideFilters = { category: '', audience: '', q: '' }
+let currentFilters: GuideFilters = { category: '', q: '' }
 export function rememberGuideFilters(filters: GuideFilters) { currentFilters = { ...filters } }
 export function rememberedGuideFilters(): GuideFilters { return { ...currentFilters } }
