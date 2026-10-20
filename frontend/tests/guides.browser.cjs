@@ -33,15 +33,15 @@ const detail = { ...summary, sections: fixture.sections,
   if(url.pathname!='/api/guides') {
    return route.fulfill({status:detailStatus,contentType:'application/json',body:JSON.stringify(detailStatus===200 ? malformed ? {} : detail : {code:'CONTENT_UNAVAILABLE'})});
   }
-  const p=Number(url.searchParams.get('page')),size=Number(url.searchParams.get('size')),q=url.searchParams.get('q'),category=url.searchParams.get('category'),audience=url.searchParams.get('audience');
+  const p=Number(url.searchParams.get('page')),size=Number(url.searchParams.get('size')),q=url.searchParams.get('q'),category=url.searchParams.get('category');
   if(delayList)await new Promise(r=>setTimeout(r,300));
   if(q==='slow')await new Promise(r=>setTimeout(r,500));
   if(failList||(failMore&&p===2))return route.fulfill({status:503,contentType:'application/json',body:'{}'});
   let all=Array.from({length:21},(_,i)=>({...summary,id:i===0?'test-guide':`test-${i}`,title:`测试攻略 ${i+1}`,category:i%2?'bank':'life'}));
   if(category)all=all.filter(item=>item.category===category);
-  if(audience==='family')all=[];
+  assert.equal(url.searchParams.has('audience'),false);
   if(q==='none')all=[];
-  if(q==='slow'||q==='fast')all=[{...summary,title:q==='slow'?'旧搜索结果':'新搜索结果'}];
+  if(q==='slow'||q==='fast')all=[{...summary,title:q==='slow'?'旧搜索结果':'新搜索结果',matchExcerpt:'匹配正文片段：电话卡办理'}];
   return route.fulfill({contentType:'application/json',body:JSON.stringify({items:all.slice((p-1)*size,p*size),total:all.length,page:p,size})});
  });
  await go('guides/index');await expect(active().locator('.guide-card')).toHaveCount(20);
@@ -49,7 +49,8 @@ const detail = { ...summary, sections: fixture.sections,
  await expect(active().locator('.guide-card')).toHaveCount(20);
  failMore=false;await click('重试加载更多');await expect(active().locator('.guide-card')).toHaveCount(21);
  await click('银行卡');await expect(active().locator('.guide-card')).toHaveCount(10);
- await click('家庭');await expect(active().getByText('没有找到相关攻略',{exact:true})).toBeVisible();
+ await expect(active().getByText('所有人群',{exact:true})).toHaveCount(0);
+ await active().locator('input').fill('none');await click('搜索');await expect(active().getByText('没有找到相关攻略',{exact:true})).toBeVisible();
  await click('清除筛选');await expect(active().locator('.guide-card')).toHaveCount(20);
  await active().locator('input').fill('slow');await active().locator('input').press('Enter');
  await expect.poll(()=>requests.some(u=>u.searchParams.get('q')==='slow')).toBe(true);
@@ -57,6 +58,7 @@ const detail = { ...summary, sections: fixture.sections,
  await expect.poll(()=>requests.some(u=>u.searchParams.get('q')==='fast')).toBe(true);
  await expect(active().locator('.guide-card')).toContainText('新搜索结果');
  await page.waitForTimeout(650);await expect(active().locator('.guide-card')).toContainText('新搜索结果');
+ await expect(active().locator('.guide-card')).toContainText('匹配正文片段：电话卡办理');
  assert(!await active().getByText('旧搜索结果',{exact:true}).count());
  console.log('PASS paging/retry, intersecting filters, empty search, stale request ignored');
  await click('清除筛选');await click('生活落地');await expect(active().locator('.guide-card')).toHaveCount(11);
@@ -67,7 +69,7 @@ const detail = { ...summary, sections: fixture.sections,
  for(const width of [320,390,768,1280]){
   await page.setViewportSize({width,height:844});
   for(const path of ['guides/index','guides/detail?id=test-guide']){
-   await go(path);await expect(active().getByText(path.includes('detail')?'事实依据与适用条件':'共 21 篇攻略',{exact:true})).toBeVisible();
+   await go(path);await expect(active().getByText(path.includes('detail')?'事实依据与适用条件':'推荐攻略 · 共 21 篇攻略',{exact:true})).toBeVisible();
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${path} ${width} overflow`);
    if(width===390)await page.screenshot({path:`/tmp/hk-e02-t04-${path.includes('detail')?'detail':'list'}.png`,fullPage:true});
   }

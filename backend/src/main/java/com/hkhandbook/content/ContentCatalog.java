@@ -17,6 +17,7 @@ import static com.hkhandbook.content.ContentValidator.*;
 public class ContentCatalog {
     private final Map<String, JsonNode> articles;
     private final Clock clock;
+    private List<String> recommendations = List.of();
     private static final ZoneId HONG_KONG = ZoneId.of("Asia/Hong_Kong");
     private static final JsonMapper MAPPER = JsonMapper.builder()
         .enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION)
@@ -24,6 +25,17 @@ public class ContentCatalog {
 
     public ContentCatalog() throws IOException {
         this(new PathMatchingResourcePatternResolver().getResources("classpath*:content/*.json"), Clock.systemUTC());
+        try (var in = new org.springframework.core.io.ClassPathResource("content/recommendations.txt").getInputStream()) {
+            recommendations = new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8).lines()
+                .map(String::strip).filter(line -> !line.isEmpty() && !line.startsWith("#")).toList();
+            if (new HashSet<>(recommendations).size() != recommendations.size() || recommendations.stream().anyMatch(id -> !id.matches("[a-z0-9]+(?:-[a-z0-9]+)*") || id.length() > 80))
+                throw new IllegalStateException("Invalid recommendation IDs");
+        }
+    }
+
+    ContentCatalog(Resource[] resources, Clock clock, List<String> recommendations) throws IOException {
+        this(resources, clock);
+        this.recommendations = List.copyOf(recommendations);
     }
 
     ContentCatalog(Resource[] resources, Clock clock) throws IOException {
@@ -46,6 +58,10 @@ public class ContentCatalog {
         articles = Collections.unmodifiableMap(loaded);
     }
 
+    int recommendationRank(JsonNode article) {
+        int index = recommendations.indexOf(value(article, "id"));
+        return index < 0 ? Integer.MAX_VALUE : index;
+    }
     LocalDate today() { return LocalDate.now(clock.withZone(HONG_KONG)); }
     List<JsonNode> visible() {
         LocalDate now = today();

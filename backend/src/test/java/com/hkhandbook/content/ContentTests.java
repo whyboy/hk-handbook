@@ -61,6 +61,38 @@ class ContentTests {
         app.perform(get("/api/guides/draft")).andExpect(status().isNotFound()).andExpect(jsonPath("$.title").doesNotExist());
     }
 
+    @Test void searchRanksPublicTextAndReturnsBodyExcerptBeforePaging() throws Exception {
+        var body = fixture(); body.put("id", "a-body");
+        object(body, "/sections/steps/blocks/0").put("text", "前文".repeat(40) + "电话卡办理" + "后文".repeat(100));
+        var title = fixture(); title.put("id", "z-title").put("title", "电话卡办理指南");
+        var keyword = fixture(); keyword.put("id", "b-keyword").putArray("keywords").add("电话卡");
+        var hidden = fixture(); hidden.put("id", "hidden").put("status", "draft").put("title", "电话卡");
+        var app = mvc(catalog(body, title, keyword, hidden));
+        app.perform(get("/api/guides").param("q", "电话卡").param("size", "1"))
+            .andExpect(jsonPath("$.total").value(3)).andExpect(jsonPath("$.items[0].id").value("z-title"));
+        app.perform(get("/api/guides").param("q", "电话卡").param("size", "1").param("page", "2"))
+            .andExpect(jsonPath("$.items[0].id").value("b-keyword"));
+        app.perform(get("/api/guides").param("q", "电话卡").param("size", "1").param("page", "3"))
+            .andExpect(jsonPath("$.items[0].id").value("a-body"))
+            .andExpect(jsonPath("$.items[0].matchExcerpt").value(org.hamcrest.Matchers.containsString("电话卡办理")));
+        app.perform(get("/api/guides").param("q", "电话卡").param("category", "bank"))
+            .andExpect(jsonPath("$.total").value(0));
+        app.perform(get("/api/guides").param("q", "test-reviewer")).andExpect(jsonPath("$.total").value(0));
+        app.perform(get("/api/guides")).andExpect(jsonPath("$.items[0].matchExcerpt").doesNotExist());
+    }
+
+    @Test void recommendationsOnlyReorderVisibleUnqueriedResults() throws Exception {
+        var a = fixture(); a.put("id", "a-guide").put("title", "独有标题");
+        var z = fixture(); z.put("id", "z-guide");
+        var draft = fixture(); draft.put("id", "draft").put("status", "draft");
+        var app = mvc(new ContentCatalog(new Resource[]{resource(a), resource(z), resource(draft)}, NOW,
+            List.of("draft", "missing", "z-guide")));
+        app.perform(get("/api/guides")).andExpect(jsonPath("$.total").value(2))
+            .andExpect(jsonPath("$.items[0].id").value("z-guide"));
+        app.perform(get("/api/guides").param("q", "独有标题"))
+            .andExpect(jsonPath("$.items[0].id").value("a-guide"));
+    }
+
     static Stream<Consumer<ObjectNode>> blockedDocuments() {
         return Stream.of(
             a -> a.put("status", "draft"), a -> a.put("status", "pending_review"), a -> a.put("status", "review_due"),

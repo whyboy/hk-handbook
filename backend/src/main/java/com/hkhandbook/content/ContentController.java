@@ -29,9 +29,17 @@ public class ContentController {
         var matches = catalog.visible().stream()
             .filter(a -> category.isEmpty() || value(a, "category").equals(category))
             .filter(a -> audience.isEmpty() || contains(a.get("audiences"), audience))
-            .filter(a -> query.isEmpty() || searchText(a).contains(query)).toList();
+            .map(a -> ContentSearch.match(a, query))
+            .filter(m -> query.isEmpty() || m.score() > 0)
+            .sorted(query.isEmpty()
+                ? Comparator.comparingInt(m -> catalog.recommendationRank(m.article()))
+                : Comparator.comparingInt(ContentSearch.Match::score).reversed()).toList();
         long offset = (long) (page - 1) * size;
-        var items = matches.stream().skip(offset).limit(size).map(ContentCatalog::summary).toList();
+        var items = matches.stream().skip(offset).limit(size).map(m -> {
+            var item = ContentCatalog.summary(m.article());
+            if (!m.excerpt().isEmpty()) item.put("matchExcerpt", m.excerpt());
+            return item;
+        }).toList();
         return response(200, Map.of("items", items, "total", matches.size(), "page", page, "size", size));
     }
 
@@ -46,11 +54,6 @@ public class ContentController {
     }
     private static String param(MultiValueMap<String, String> p, String key, String fallback) { String v = p.getFirst(key); return v == null ? fallback : v.strip(); }
     private static boolean contains(JsonNode values, String value) { for (var item : values) if (item.stringValue().equals(value)) return true; return false; }
-    private static String searchText(JsonNode a) {
-        var text = new StringBuilder(value(a, "title")).append('\n').append(value(a, "summary"));
-        a.get("keywords").forEach(k -> text.append('\n').append(k.stringValue()));
-        return text.toString().toLowerCase(Locale.ROOT);
-    }
     private static ResponseEntity<?> badRequest() { return response(400, Map.of("code", "INVALID_QUERY", "message", "查询参数无效")); }
     private static ResponseEntity<?> missing() { return response(404, Map.of("code", "CONTENT_UNAVAILABLE", "message", "内容不存在或暂不可用")); }
     private static ResponseEntity<?> response(int status, Object body) {
