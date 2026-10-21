@@ -1,3 +1,4 @@
+import type { TopicId } from '@/features/topics/content'
 import { setGuideFilters, takeGuideFilters, type GuideFilters } from '@/features/guides/content'
 import type { RecordSectionId } from '@/features/profile/content'
 import type { HomeActionId } from '@/features/home/content'
@@ -69,4 +70,8 @@ export function returnChecklists() {
   } else {
     uni.reLaunch({ url, fail: showNavigationError })
   }
+}
+
+export function openTopic(id: TopicId) {
+  uni.navigateTo({ url: `/pages/topics/${id}`, fail: showNavigationError })
 }
