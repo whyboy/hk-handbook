@@ -10,7 +10,7 @@ backend（Java 21 + Spring Boot MVC）
                   SQLite 文件
 ```
 
-前后端独立运行和构建。当前首页和攻略页已接入内容 API；工具及我的／记录仍保留框架，使用 uni-app 导航 API，无业务数据表或认证逻辑。页面路径集中在 `frontend/src/navigation/index.ts`，页面共用 PageContainer，卡片与展示状态由公共组件复用；pages.json 集中页面标题及原生四 Tab 配置。顶层导航使用 switchTab，二级页使用 navigateTo，直接进入二级页可切回对应 Tab。
+前后端独立运行和构建。当前攻略页已接入内容 API，首页仅提供搜索与主题导航，不请求攻略数据；工具及我的／记录仍保留框架，使用 uni-app 导航 API，无业务数据表或认证逻辑。页面路径集中在 `frontend/src/navigation/index.ts`，页面共用 PageContainer，卡片与展示状态由公共组件复用；pages.json 集中页面标题及原生四 Tab 配置。顶层导航使用 switchTab，二级页使用 navigateTo，直接进入二级页可切回对应 Tab。
 后端包含应用入口、数据源配置和 `/api/health`；健康接口执行 SELECT 1，测试还检查数据库外键开关及故障时的 503 响应。
 后续 API 以 /api 开头，使用 HTTP 方法及状态码表达资源操作，数据交换为 JSON。
 

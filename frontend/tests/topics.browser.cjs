@@ -17,7 +17,8 @@ const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['pho
   for(const width of [320,390,768,1280]) {
    await page.setViewportSize({width,height:844});
    await page.goto(base+'/#/pages/index/index');
-   await expect(active().getByText('暂无已发布攻略',{exact:true})).toBeVisible();
+   await expect(active().locator('.search')).toBeVisible();
+   await expect(active().getByText(/推荐攻略|暂无已发布攻略|查看全部攻略|我的收藏与记录|赴港办事，先了解，再出发/)).toHaveCount(0);
    const cards=active().locator('.task-card');await expect(cards).toHaveCount(6);
    await expect(active().getByText('查看全部工具 →',{exact:true})).toHaveCount(0);
    const boxes=await cards.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,right:r.right}}));
@@ -42,6 +43,7 @@ const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['pho
    await expect(active().locator('.title')).toHaveText(title);
    await active().getByText('返回首页',{exact:true}).click();
   }
+  assert.deepEqual(api, [], 'home and topics must not request content');
   await active().locator('.search').click();
   await expect(active().getByText('暂无已发布攻略',{exact:true})).toBeVisible();
   for(const label of ['工具','攻略','我的','首页']) {
