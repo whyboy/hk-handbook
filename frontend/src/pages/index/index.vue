@@ -17,29 +17,30 @@
     <view class="task-section">
       <view class="section-eyebrow">
         <view class="status-dot" aria-hidden="true" />
-        <text>首次来港 · 免费实用工具</text>
+        <text>办事与生活 · 从这里开始</text>
       </view>
-      <text class="section-title">你来香港，准备办什么？</text>
+      <text class="section-title">你想了解香港的哪些事？</text>
       <text class="section-description">从一件事开始，把准备做得更清楚。</text>
       <view class="task-grid">
         <button
-          v-for="action in homeActions"
+          v-for="action in topics"
           :key="action.id"
           class="task-card button-reset"
           hover-class="pressed"
-          @click="openToolIntro(action.id)"
+          @click="openTopic(action.id)"
         >
           <view :class="['task-icon', `task-icon-${action.id}`]" aria-hidden="true">
             <view class="icon-detail" />
           </view>
-          <text class="task-title">{{ action.title }}</text>
+          <view class="task-title">
+            <text>{{ action.id === 'talent' ? '高才／优才' : action.title }}</text>
+            <text v-if="action.id === 'talent'">申请</text>
+          </view>
           <text class="task-subtitle">{{ action.subtitle }}</text>
-          <text class="task-status">功能建设中</text>
         </button>
       </view>
     </view>
 
-    <button class="all-tools" @click="openTools">查看全部工具 →</button>
 
     <view class="guides-section">
       <view class="section-heading">
@@ -79,10 +80,10 @@ import { ref } from 'vue'
 import { onShow, onHide, onUnload } from '@dcloudio/uni-app'
 import PageContainer from '@/components/PageContainer.vue'
 import PageState from '@/components/PageState.vue'
-import { homeActions } from '@/features/home/content'
+import { topics } from '@/features/topics/content'
 import { categoryLabel } from '@/features/guides/content'
 import { getGuides, type GuideSummary } from '@/features/guides/api'
-import { openToolIntro, openTools, openGuide, openGuides, openProfile } from '@/navigation'
+import { openTopic, openGuide, openGuides, openProfile } from '@/navigation'
 const guidePreviews = ref<GuideSummary[]>([])
 const guideState = ref<'loading' | 'ready' | 'error'>('loading')
 let generation = 0
@@ -140,17 +141,17 @@ onHide(invalidate); onUnload(invalidate)
 .status-dot { width: 5px; height: 5px; border-radius: 50%; background: #38685e; }
 .section-title { display: block; font-size: 21px; font-weight: 700; line-height: 1.5; }
 .section-description { display: block; margin-top: 6px; font-size: 13px; color: #627570; }
-.task-grid { display: flex; gap: 8px; margin-top: 22px; }
+.task-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 22px; }
 .task-card { display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: center; padding: 20px 4px 14px; border-radius: 12px; background: #fff; text-align: center; }
-.task-title { margin-top: 14px; font-size: 15px; font-weight: 600; }
+.task-title { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 45px; margin-top: 14px; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
 .task-subtitle { margin-top: 5px; font-size: 11px; color: #627570; }
 .task-status { margin-top: 12px; font-size: 10px; color: #627570; }
 .task-icon { position: relative; box-sizing: border-box; width: 26px; height: 22px; color: #38685e; }
 .task-icon-bank { border: 1.8px solid currentColor; border-radius: 5px; }
 .task-icon-bank::before { content: ''; position: absolute; top: 5px; left: 0; right: 0; height: 2px; background: currentColor; }
 .task-icon-bank .icon-detail { position: absolute; width: 5px; height: 2px; bottom: 4px; left: 4px; background: currentColor; }
-.task-icon-identity::before { content: ''; position: absolute; top: 0; left: 3px; width: 18px; height: 12px; border: 1.8px solid currentColor; border-radius: 2px; transform: rotate(-30deg) skewX(30deg) scaleY(.8); }
-.task-icon-identity .icon-detail { position: absolute; left: 5px; top: 11px; width: 15px; height: 8px; border: 1.8px solid currentColor; border-top: 0; border-radius: 0 0 6px 6px; }
+.task-icon-talent::before { content: ''; position: absolute; top: 0; left: 3px; width: 18px; height: 12px; border: 1.8px solid currentColor; border-radius: 2px; transform: rotate(-30deg) skewX(30deg) scaleY(.8); }
+.task-icon-talent .icon-detail { position: absolute; left: 5px; top: 11px; width: 15px; height: 8px; border: 1.8px solid currentColor; border-top: 0; border-radius: 0 0 6px 6px; }
 .task-icon-checklist { width: 19px; border: 1.8px solid currentColor; border-radius: 4px; }
 .task-icon-checklist::before { content: ''; position: absolute; top: -4px; left: 4px; width: 7px; height: 4px; border: 1.5px solid currentColor; border-radius: 2px; background: #fff; }
 .task-icon-checklist .icon-detail { position: absolute; top: 8px; left: 5px; width: 7px; height: 4px; border-left: 1.8px solid currentColor; border-bottom: 1.8px solid currentColor; transform: rotate(-45deg); }
@@ -178,8 +179,22 @@ onHide(invalidate); onUnload(invalidate)
 
   .task-section { padding-left: 10px; padding-right: 10px; }
   .section-title { font-size: 19px; }
+  .task-title { font-size: 13px; }
   .search { padding-left: 12px; padding-right: 12px; }
   .search-label { font-size: 12px; }
   .search-status { margin-left: 6px; }
 }
+</style>
+
+<style scoped>
+.task-icon-phone { width: 16px; border: 1.8px solid currentColor; border-radius: 3px; }
+.task-icon-phone::after { content: ''; position: absolute; bottom: 3px; left: 5px; width: 3px; height: 2px; background: currentColor; }
+.task-icon-transport { border: 1.8px solid currentColor; border-radius: 5px; }
+.task-icon-transport::before { content: ''; position: absolute; inset: 4px 3px 8px; border: 1px solid currentColor; }
+.task-icon-transport::after { content: '• •'; position: absolute; bottom: -4px; left: 4px; font-size: 13px; }
+.task-icon-attractions { width: 21px; height: 21px; border: 1.8px solid currentColor; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+.task-icon-attractions::after { content: ''; position: absolute; inset: 5px; border: 1.5px solid currentColor; border-radius: 50%; }
+.task-icon-tax { border: 1.8px solid currentColor; border-radius: 3px; }
+.task-icon-tax::before { content: ''; position: absolute; top: 4px; left: 4px; right: 4px; height: 4px; border: 1px solid currentColor; }
+.task-icon-tax::after { content: '···'; position: absolute; bottom: -3px; left: 5px; font-weight: 700; }
 </style>

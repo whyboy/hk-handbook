@@ -10,7 +10,7 @@ backend（Java 21 + Spring Boot MVC）
                   SQLite 文件
 ```
 
-前后端独立运行和构建。当前首页和攻略页已接入内容 API；工具及我的／记录仍保留框架，使用 uni-app 导航 API，无业务数据表或认证逻辑。页面路径集中在 `frontend/src/navigation/index.ts`，十个页面共用 PageContainer，卡片与展示状态由公共组件复用；pages.json 集中页面标题及原生四 Tab 配置。顶层导航使用 switchTab，二级页使用 navigateTo，直接进入二级页可切回对应 Tab。
+前后端独立运行和构建。当前首页和攻略页已接入内容 API；工具及我的／记录仍保留框架，使用 uni-app 导航 API，无业务数据表或认证逻辑。页面路径集中在 `frontend/src/navigation/index.ts`，页面共用 PageContainer，卡片与展示状态由公共组件复用；pages.json 集中页面标题及原生四 Tab 配置。顶层导航使用 switchTab，二级页使用 navigateTo，直接进入二级页可切回对应 Tab。
 后端包含应用入口、数据源配置和 `/api/health`；健康接口执行 SELECT 1，测试还检查数据库外键开关及故障时的 503 响应。
 后续 API 以 /api 开头，使用 HTTP 方法及状态码表达资源操作，数据交换为 JSON。
 
@@ -21,6 +21,10 @@ SQLite 使用单连接池以简化并发写入，连接初始化启用外键约�
 H5 已使用 Vite 的 /api 开发代理（默认本机 8080）；生产按部署方案选择同源反向代理或精确 CORS 配置。
 小程序应配置可访问的 HTTPS API 地址及合法域名，真机不能将 localhost 作为开发电脑地址。
 攻略请求统一使用 uni.request，10 秒超时和响应格式检查，配置与回归方法见 [E02-T04](implementation/E02-T04.md)；生产反向代理见下述部署结构。
+
+## 主题导航
+
+首页六宫格读取 `features/topics/content.ts`，通过 `openTopic` 进入 `pages/topics/` 下六个独立路由；空页面复用 TopicPlaceholder，不发业务 API、不显示投票。主题与攻略四分类独立。工具页仍为历史框架，其计算类功能后续单独实现。公开有用／无用票数仅为产品设计，当前没有投票表或接口。
 
 ## 部署结构
 

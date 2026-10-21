@@ -59,6 +59,42 @@
       "style": {
         "navigationBarTitleText": "清单详情"
       }
+    },
+    {
+      "path": "pages/topics/bank",
+      "style": {
+        "navigationBarTitleText": "港卡办理"
+      }
+    },
+    {
+      "path": "pages/topics/talent",
+      "style": {
+        "navigationBarTitleText": "高才／优才申请"
+      }
+    },
+    {
+      "path": "pages/topics/phone",
+      "style": {
+        "navigationBarTitleText": "电话卡办理"
+      }
+    },
+    {
+      "path": "pages/topics/transport",
+      "style": {
+        "navigationBarTitleText": "交通指南"
+      }
+    },
+    {
+      "path": "pages/topics/attractions",
+      "style": {
+        "navigationBarTitleText": "景点推荐"
+      }
+    },
+    {
+      "path": "pages/topics/tax",
+      "style": {
+        "navigationBarTitleText": "税务指南"
+      }
     }
   ],
   "globalStyle": {

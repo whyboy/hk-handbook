@@ -2,9 +2,9 @@
 
 **港易通**（暂定名）——第一次去香港，从这里开始。
 
-面向有赴港办事、工作、生活需求的内地用户，提供实用攻略、办事导航和规则初筛，核心价值是查要求、比方案、做测评、生成清单。首期免费，聚焦银行开户匹配、高才／优才初筛与赴港办事清单，采用“首页 / 工具 / 攻略 / 我的”四个 Tab，不做社区。
+面向赴港办事、工作、生活的内地用户，提供可核验攻略和主题导航。首页展示港卡办理、高才／优才申请、电话卡办理、交通指南、景点推荐、税务指南六个板块，两行三列；保留“首页 / 工具 / 攻略 / 我的”四 Tab。工具未来承载计算与比较类小工具，不做评论社区。
 
-总体定位、MVP 范围、页面结构、增长方案和验收标准见 [产品方案](docs/PRD.md)；Epic 与 Task 的交付划分见 [研发计划](docs/ROADMAP.md)。以上是目标产品；当前已实现四 Tab 导航、公共页面组件及首页、四项工具入口、工具说明与结果空状态、攻略浏览搜索与详情、我的与记录空页面框架，匹配、测评、清单等业务功能尚未开放；后端包含应用启动、数据库健康检查及攻略列表／搜索／详情接口（前端已接入，当前正式内容包为空）。微信小程序与 H5 共用前端代码，Java 后端提供 RESTful JSON API。
+产品依据见 [PRD](docs/PRD.md)，逐板块规划方式见 [ROADMAP](docs/ROADMAP.md)。当前实现首页六主题独立空页面、攻略搜索／详情及原工具／我的框架；主题正文、公开有用／无用票数及具体工具尚未实现。后端包含数据库健康检查与内容查询，正式攻略包当前为空。微信小程序与 H5 共用前端代码。
 
 日常任务入口：[按 Epic 分组查看任务](https://github.com/users/whyboy/projects/4/views/3) · [执行看板](https://github.com/users/whyboy/projects/4/views/4) · [Epic 总览](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Aepic%22) · [Task 列表](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Atask%22)。打开 Epic 可查看其子任务与进度。
 
@@ -58,6 +58,8 @@ cd backend
 SQLite 默认在后端工作目录生成 `hk-handbook.db`（首次建立数据库连接时）；
 可通过 `DATABASE_URL=jdbc:sqlite:/绝对路径/handbook.db` 覆盖，父目录需要提前存在。
 数据库文件不会进入 Git。测试使用内存 SQLite，不污染本地数据。
+
+首页主题设计见 [产品方案](docs/PRD.md)，实际验证结果见 [验证记录](docs/VALIDATION.md)。原 E03～E08 远期任务规划已取消，后续按板块确认需求并创建 Epic。
 
 ## 内容维护
 
