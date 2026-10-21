@@ -19,6 +19,7 @@
 | [E02-T04 #32](https://github.com/whyboy/hk-handbook/issues/32) | 跨端攻略浏览与上下文入口 |
 | [E02-T05 #59](https://github.com/whyboy/hk-handbook/issues/59) | 无人群筛选、正文搜索、相关度和编辑推荐 |
 | [E02-T06 #61](https://github.com/whyboy/hk-handbook/issues/61) | 首页六主题导航、独立空页面及产品规划同步 |
+| [E02-T07 #63](https://github.com/whyboy/hk-handbook/issues/63) | 精简首页为搜索与主题入口 |
 
 ## 规划调整
 

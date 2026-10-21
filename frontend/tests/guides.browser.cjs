@@ -21,11 +21,12 @@ const detail = { ...summary, sections: fixture.sections,
  let entry=0;
  const go=path=>page.goto(base+'/?testEntry='+ ++entry +'#/pages/'+path);
  // Unintercepted production-empty API: no fake samples or draft content.
- await go('index/index');await expect(active().getByText('暂无已发布攻略',{exact:true})).toBeVisible();
+ await go('index/index');await expect(active().locator('.task-card')).toHaveCount(6);
+ await expect(active().locator('.guide-card')).toHaveCount(0);
  await click('搜索：香港银行卡 / 高才 / 手机卡搜索攻略');
  await expect(active().getByText('暂无已发布攻略',{exact:true})).toBeVisible();
  await go('guides/detail?id=mtr-route');await expect(active().getByText('攻略不存在或暂不可用',{exact:true})).toBeVisible();
- console.log('PASS actual backend: empty home/list and draft 404');
+ console.log('PASS actual backend: simple home, empty list and draft 404');
  let failList=false, failMore=false, detailStatus=200, delayList=false, malformed=false;
  const requests=[];
  await page.route('**/api/guides**',async route=>{
@@ -78,9 +79,10 @@ const detail = { ...summary, sections: fixture.sections,
  await page.context().route('https://example.org/test', route=>route.fulfill({contentType:'text/html',body:'<title>Test source</title>'}));
  const popupReady=page.waitForEvent('popup');await click('打开官方来源');const popup=await popupReady;
  await popup.waitForLoadState();assert.equal(popup.url(),'https://example.org/test');assert.equal(await popup.evaluate(()=>window.opener),null);await popup.close();
- await click('返回首页');await expect(active().locator('.guide-card')).toHaveCount(3);
+ await click('返回首页');await expect(active().locator('.guide-card')).toHaveCount(0);
+ await active().locator('.search').click();await expect(active().locator('.guide-card')).toHaveCount(20);
  await active().locator('.guide-card').first().click();await expect(active().getByText('官方来源',{exact:true})).toBeVisible();
- console.log('PASS detail, home cards, retained category, reload and four responsive widths');
+ console.log('PASS detail, home search navigation, retained category, reload and four responsive widths');
  detailStatus=410;await page.reload();await expect(active().getByText('这篇攻略已下架',{exact:true})).toBeVisible();
  await expect(active().getByText('Synthetic test statement',{exact:false})).toHaveCount(0);
  detailStatus=404;await page.reload();await expect(active().getByText('攻略不存在或暂不可用',{exact:true})).toBeVisible();
