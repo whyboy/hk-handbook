@@ -9,7 +9,7 @@
 | Epic | 任务 |
 | --- | --- |
 | [E01 页面框架 #8](https://github.com/whyboy/hk-handbook/issues/8) | T01 #9、T02 #27、T03 #28、T04 #29、T05 #30；历史交付与剩余验收保留 |
-| [E02 内容与浏览 #20](https://github.com/whyboy/hk-handbook/issues/20) | 下表；包含本次首页主题导航调整 |
+| [E02 内容与浏览 #20](https://github.com/whyboy/hk-handbook/issues/20) | 下表；包含首页搜索与资讯页面框架 |
 
 | Task | 范围 |
 | --- | --- |
@@ -20,6 +20,7 @@
 | [E02-T05 #59](https://github.com/whyboy/hk-handbook/issues/59) | 无人群筛选、正文搜索、相关度和编辑推荐 |
 | [E02-T06 #61](https://github.com/whyboy/hk-handbook/issues/61) | 首页六主题导航、独立空页面及产品规划同步 |
 | [E02-T07 #63](https://github.com/whyboy/hk-handbook/issues/63) | 精简首页为搜索与主题入口 |
+| [E02-T08 #68](https://github.com/whyboy/hk-handbook/issues/68) | 搜索结果保留在首页 Tab，原攻略 Tab 改为学校／政策资讯框架 |
 
 ## 规划调整
 

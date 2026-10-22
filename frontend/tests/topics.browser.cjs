@@ -46,10 +46,14 @@ const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['pho
   assert.deepEqual(api, [], 'home and topics must not request content');
   await active().locator('.search').click();
   await expect(active().getByText('暂无已发布攻略',{exact:true})).toBeVisible();
-  for(const label of ['工具','攻略','我的','首页']) {
+  assert.equal(page.url().includes('/pages/guides/index'),false,'home search must not switch to the news tab route');
+  for(const label of ['工具','资讯','我的','首页']) {
    await page.locator('uni-tabbar .uni-tabbar__label').filter({hasText:new RegExp('^'+label+'$')}).click();
    await expect(page.locator('uni-tabbar')).toBeVisible();
   }
+  await page.locator('uni-tabbar .uni-tabbar__label').filter({hasText:/^资讯$/}).click();
+  await expect(active().getByText('暂无已发布资讯',{exact:true})).toBeVisible();
+  for(const label of ['最新','香港学校','香港政策']) await expect(active().getByText(label,{exact:true})).toBeVisible();
   assert(api.every(path=>path==='/api/guides'));
   assert.deepEqual(errors,[]);
   console.log('PASS six topics, 2x3 layout at four widths, direct/reload/back, search/tabs, no voting or runtime errors');

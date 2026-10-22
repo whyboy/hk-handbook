@@ -20,6 +20,7 @@ const detail = { ...summary, sections: fixture.sections,
  const click=label=>active().locator('uni-button').filter({hasText:new RegExp('^'+label+'$')}).click();
  let entry=0;
  const go=path=>page.goto(base+'/?testEntry='+ ++entry +'#/pages/'+path);
+ const goSearch=async()=>{await go('index/index');await click('搜索：香港银行卡 / 高才 / 手机卡搜索攻略');};
  // Unintercepted production-empty API: no fake samples or draft content.
  await go('index/index');await expect(active().locator('.task-card')).toHaveCount(6);
  await expect(active().locator('.guide-card')).toHaveCount(0);
@@ -45,7 +46,7 @@ const detail = { ...summary, sections: fixture.sections,
   if(q==='slow'||q==='fast')all=[{...summary,title:q==='slow'?'旧搜索结果':'新搜索结果',matchExcerpt:'匹配正文片段：电话卡办理'}];
   return route.fulfill({contentType:'application/json',body:JSON.stringify({items:all.slice((p-1)*size,p*size),total:all.length,page:p,size})});
  });
- await go('guides/index');await expect(active().locator('.guide-card')).toHaveCount(20);
+ await goSearch();await expect(active().locator('.guide-card')).toHaveCount(20);
  failMore=true;await click('加载更多');await expect(active().getByText('加载更多失败，已有结果保留，请重试。')).toBeVisible();
  await expect(active().locator('.guide-card')).toHaveCount(20);
  failMore=false;await click('重试加载更多');await expect(active().locator('.guide-card')).toHaveCount(21);
@@ -70,7 +71,8 @@ const detail = { ...summary, sections: fixture.sections,
  for(const width of [320,390,768,1280]){
   await page.setViewportSize({width,height:844});
   for(const path of ['guides/index','guides/detail?id=test-guide']){
-   await go(path);await expect(active().getByText(path.includes('detail')?'事实依据与适用条件':'推荐攻略 · 共 21 篇攻略',{exact:true})).toBeVisible();
+   if(path.includes('detail')) await go(path); else await goSearch();
+   await expect(active().getByText(path.includes('detail')?'事实依据与适用条件':'推荐攻略 · 共 21 篇攻略',{exact:true})).toBeVisible();
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${path} ${width} overflow`);
    if(width===390)await page.screenshot({path:`/tmp/hk-e02-t04-${path.includes('detail')?'detail':'list'}.png`,fullPage:true});
   }
@@ -90,11 +92,9 @@ const detail = { ...summary, sections: fixture.sections,
  detailStatus=200;await click('重试');await expect(active().getByText('官方来源',{exact:true})).toBeVisible();
  malformed=true;await page.reload();await expect(active().getByText('攻略加载失败',{exact:true})).toBeVisible();malformed=false;
  await go('guides/detail?id=%3Cscript%3E');await expect(active().getByText('攻略不存在或暂不可用',{exact:true})).toBeVisible();
- failList=true;await go('guides/index');await expect(active().getByText('攻略加载失败',{exact:true})).toBeVisible();
+ failList=true;await goSearch();await expect(active().getByText('攻略加载失败',{exact:true})).toBeVisible();
  failList=false;delayList=true;await click('重试');await expect(active().getByText('正在查找攻略',{exact:true})).toBeVisible();
  await expect(active().locator('.guide-card')).toHaveCount(20);delayList=false;
- await go('tools/intro?scene=bank');await click('查看相关攻略');await expect(active().locator('.category.selected').first()).toHaveText('银行卡');
- await expect(active().locator('.guide-card')).toHaveCount(10);
  await go('checklist/detail?demo=layout');await click('查看生活落地攻略');await expect(active().locator('.category.selected').first()).toHaveText('生活落地');
  await expect(active().locator('.guide-card')).toHaveCount(11);
  assert.equal(errors.length,0,errors.join('\n'));
