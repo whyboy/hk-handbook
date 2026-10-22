@@ -43,12 +43,16 @@ export function returnTools() { returnTo(routes.tools) }
 
 export function openGuides(filters?: Partial<GuideFilters>) {
   if (filters) setGuideFilters(filters)
-  uni.switchTab({ url: routes.guides, fail: () => { takeGuideFilters(); showNavigationError() } })
+  uni.switchTab({ url: routes.home, fail: () => { takeGuideFilters(); showNavigationError() } })
 }
 export function openGuide(id: string) {
   uni.navigateTo({ url: `${routes.guideDetail}?id=${encodeURIComponent(id)}`, fail: showNavigationError })
 }
-export function returnGuides() { returnTo(routes.guides) }
+export function returnGuides() {
+  const pages = getCurrentPages()
+  if (pages.length > 1) uni.navigateBack({ fail: () => returnHome() })
+  else returnHome()
+}
 
 export function openProfile() { switchTab(routes.profile) }
 export function openRecords(type: RecordSectionId) {

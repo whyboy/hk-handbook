@@ -1,5 +1,7 @@
 <template>
   <PageContainer wide>
+    <GuideSearch v-if="searchMode" :key="searchKey" @close="closeSearch" />
+    <template v-else>
     <view class="brand">
       <view class="brand-line">
         <text class="brand-name">港易通</text>
@@ -8,7 +10,7 @@
       <text class="slogan">第一次去香港，从这里开始。</text>
     </view>
 
-    <button class="search button-reset" hover-class="pressed" @click="openGuides({})">
+    <button class="search button-reset" hover-class="pressed" @click="openSearch">
       <view class="search-icon" aria-hidden="true" />
       <text class="search-label">搜索：香港银行卡 / 高才 / 手机卡</text>
       <text class="search-status">搜索攻略</text>
@@ -40,13 +42,34 @@
         </button>
       </view>
     </view>
+    </template>
   </PageContainer>
 </template>
 
 <script setup lang="ts">
 import PageContainer from '@/components/PageContainer.vue'
+import GuideSearch from '@/components/GuideSearch.vue'
 import { topics } from '@/features/topics/content'
-import { openTopic, openGuides } from '@/navigation'
+import { rememberGuideFilters, takeGuideFilters } from '@/features/guides/content'
+import { ref } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
+import { openTopic } from '@/navigation'
+
+const searchMode = ref(false)
+const searchKey = ref(0)
+function openSearch() {
+  rememberGuideFilters({ category: '', q: '' })
+  searchKey.value++
+  searchMode.value = true
+}
+function closeSearch() { searchMode.value = false }
+onShow(() => {
+  const next = takeGuideFilters()
+  if (!next) return
+  rememberGuideFilters({ category: next.category ?? '', q: next.q ?? '' })
+  searchKey.value++
+  searchMode.value = true
+})
 </script>
 
 <style scoped>

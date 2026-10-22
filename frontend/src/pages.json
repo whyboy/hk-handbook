@@ -27,7 +27,7 @@
     {
       "path": "pages/guides/index",
       "style": {
-        "navigationBarTitleText": "攻略"
+        "navigationBarTitleText": "资讯"
       }
     },
     {
@@ -123,7 +123,7 @@
       },
       {
         "pagePath": "pages/guides/index",
-        "text": "攻略",
+        "text": "资讯",
         "iconPath": "static/tabs/guides.png",
         "selectedIconPath": "static/tabs/guides-selected.png"
       },
