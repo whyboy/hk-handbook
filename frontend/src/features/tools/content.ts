@@ -1,10 +1,10 @@
 // Presentation only: no rules, answers or generated results.
 export const tools = [
-  { id: 'checklist', symbol: '✓', label: '行前准备', brief: '把每一次赴港，准备得井井有条', note: '出发前反复核对，办理时随手查看', title: '赴港清单生成', purpose: '按赴港目的整理出发前、办理中与完成后的准备事项。', input: '未来将选择办事目的及相关准备情况。', output: '未来将展示准备步骤、材料与核实提示；当前不会生成或保存清单。' },
-  { id: 'bank', symbol: '▤', label: '银行办事', brief: '开户前，先理清准备方向', note: '了解要求 · 比较方案 · 准备材料', title: '银行开户匹配', purpose: '了解银行公开开户要求，比较需要进一步核实的方案。', input: '未来将询问身份证持有情况、开户用途、能否亲临香港及跨境服务需要。', output: '未来将展示匹配理由、待核实条件、材料与官方入口，不承诺开户成功。' },
-  { id: 'talent', symbol: 'A', label: '人才身份', brief: '了解高才通的申请路径', note: 'A / B / C 类路径分别了解', title: '高才资格初筛', purpose: '分别了解高才通 A、B、C 类路径的适用条件。', input: '未来将按路径了解收入、学历和工作经历；不收集证件扫描件。', output: '未来将展示明确条件、待核实项和材料缺口，不预测批准概率。' },
-  { id: 'quality', symbol: 'Q', label: '人才身份', brief: '梳理优才的资格与条件', note: '基本资格与评核机制分别了解', title: '优才资格初筛', purpose: '了解优才基本资格及两种评核机制，与高才分开评估。', input: '未来将了解基本资格和所选评核机制相关情况；不收集证件扫描件。', output: '未来将分层说明条件和待核实信息，不提供获批承诺。' },
-
+  { id: 'exchange', symbol: '⇄', label: '金额换算', title: '汇率换算', brief: '换算港币与人民币金额', purpose: '按明确的汇率来源换算港币与人民币金额。', input: '未来将输入金额并选择换算方向。', output: '未来将展示换算金额、汇率来源及更新时间。' },
+  { id: 'net-salary', symbol: '$', label: '薪资工具', title: '税后工资估算', brief: '估算全年收入、税款与月均可支配收入', purpose: '估算全年收入扣除预计税款和强积金后的可支配收入。', input: '未来将输入收入、适用税年及必要的估算条件。', output: '未来将分别展示年收入、预计税款、强积金及月均可支配收入。' },
+  { id: 'offer', symbol: '≠', label: '薪资工具', title: 'Offer 收入对比', brief: '比较不同薪资和奖金方案', purpose: '将不同 Offer 的月薪、发薪月数和奖金放在统一口径下比较。', input: '未来将分别输入每份 Offer 的薪资和奖金条件。', output: '未来将展示各方案的预计全年收入和金额差异。' },
+  { id: 'living-budget', symbol: '∴', label: '生活工具', title: '生活预算计算', brief: '看看每月开支后还能剩多少', purpose: '汇总每月收入和生活开支，估算可剩余金额。', input: '未来将输入每月收入、房租、交通、饮食及其他开支。', output: '未来将展示每月总开支、结余和结余比例。' },
+  { id: 'rental-budget', symbol: '⌂', label: '租房工具', title: '租房入住预算', brief: '汇总租金、押金及其他入住支出', purpose: '汇总租房入住时需要准备的各项现金支出。', input: '未来将由用户填写租金、押金、中介费及其他费用。', output: '未来将展示预计入住总支出，不预设统一收费标准。' },
 ] as const
 export type ToolId = (typeof tools)[number]['id']
 export function findTool(value: unknown) { return tools.find((tool) => tool.id === value) }

@@ -8,7 +8,7 @@
     </view>
     <view class="preview-panel">
       <text class="section-title">{{ tool ? '暂无结果 · 功能筹备中' : '入口暂不可用' }}</text>
-      <text class="description muted">{{ tool ? '工具尚未开放，当前没有生成任何匹配、初筛或清单结果。' : '这个链接可能有误，你可以返回工具页浏览现有工具。' }}</text>
+      <text class="description muted">{{ tool ? '工具尚未开放，当前没有执行计算或生成结果。' : '这个链接可能有误，你可以返回工具页浏览现有工具。' }}</text>
     </view>
     <view v-if="tool" class="steps-panel result-preview">
       <text class="eyebrow">未来的结果内容</text>
