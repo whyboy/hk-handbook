@@ -3,7 +3,7 @@
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "港易通"
+        "navigationBarTitleText": "香港百事通"
       }
     },
     {
@@ -67,9 +67,9 @@
       }
     },
     {
-      "path": "pages/topics/talent",
+      "path": "pages/topics/identity",
       "style": {
-        "navigationBarTitleText": "高才／优才申请"
+        "navigationBarTitleText": "香港身份"
       }
     },
     {
@@ -79,9 +79,9 @@
       }
     },
     {
-      "path": "pages/topics/transport",
+      "path": "pages/topics/metro",
       "style": {
-        "navigationBarTitleText": "交通指南"
+        "navigationBarTitleText": "地铁乘坐"
       }
     },
     {
@@ -93,20 +93,50 @@
     {
       "path": "pages/topics/tax",
       "style": {
-        "navigationBarTitleText": "税务指南"
+        "navigationBarTitleText": "税务办理"
+      }
+    },
+    {
+      "path": "pages/topics/housing",
+      "style": {
+        "navigationBarTitleText": "港房租售"
+      }
+    },
+    {
+      "path": "pages/topics/education",
+      "style": {
+        "navigationBarTitleText": "香港教育"
+      }
+    },
+    {
+      "path": "pages/topics/insurance",
+      "style": {
+        "navigationBarTitleText": "香港保险"
+      }
+    },
+    {
+      "path": "pages/topics/mpf",
+      "style": {
+        "navigationBarTitleText": "强公积金"
+      }
+    },
+    {
+      "path": "pages/topics/driving",
+      "style": {
+        "navigationBarTitleText": "驾驶证办理"
       }
     }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "港易通",
-    "navigationBarBackgroundColor": "#F7F9F6",
-    "backgroundColor": "#F7F9F6"
+    "navigationBarTitleText": "香港百事通",
+    "navigationBarBackgroundColor": "#F6F8F5",
+    "backgroundColor": "#F6F8F5"
   },
   "tabBar": {
-    "color": "#627570",
-    "selectedColor": "#286456",
-    "backgroundColor": "#F7F9F6",
+    "color": "#71817D",
+    "selectedColor": "#B83240",
+    "backgroundColor": "#FCFDFB",
     "borderStyle": "white",
     "list": [
       {

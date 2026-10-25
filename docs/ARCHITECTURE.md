@@ -24,7 +24,7 @@ H5 已使用 Vite 的 /api 开发代理（默认本机 8080）；生产按部署
 
 ## 主题导航
 
-首页六宫格读取 `features/topics/content.ts`，通过 `openTopic` 进入 `pages/topics/` 下六个独立路由；空页面复用 TopicPlaceholder，不发业务 API、不显示投票。首页搜索状态复用 `GuideSearch`，主题与攻略四分类独立。资讯契约位于 `features/news/content.ts`，真实内容来源及后端服务尚未设计。
+首页板块读取 `features/topics/content.ts`，通过 `openTopic` 进入 `pages/topics/` 下 11 个独立路由；H5 使用三列、小程序使用两列。空页面复用 TopicPlaceholder，不发业务 API、不显示投票。首页搜索状态复用 `GuideSearch`，主题与攻略四分类独立。资讯契约位于 `features/news/content.ts`，真实内容来源及后端服务尚未设计。
 
 ## 部署结构
 

@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <text class="eyebrow">港易通 · 我的</text>
+    <text class="eyebrow">香港百事通 · 我的</text>
     <text class="title">你的赴港准备</text>
     <UnavailableNotice description="功能建设中，当前仅展示页面框架，不读取或保存个人记录。" />
     <button v-for="section in recordSections" :key="section.id" class="entry" @click="openRecords(section.id)">

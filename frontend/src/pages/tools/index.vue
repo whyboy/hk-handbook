@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <view class="page-heading"><text class="eyebrow">港易通 / 实用工具</text><text class="edition">筹备中</text></view>
+    <view class="page-heading"><text class="eyebrow">香港百事通 / 实用工具</text><text class="edition">筹备中</text></view>
     <text class="title">实用小工具</text>
     <text class="description muted">算清收入，安排生活。</text>
     <view class="tool-list">

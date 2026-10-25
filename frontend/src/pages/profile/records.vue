@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <text class="eyebrow">港易通 · 我的记录</text>
+    <text class="eyebrow">香港百事通 · 我的记录</text>
     <text class="title">{{ section?.title ?? '记录入口不可用' }}</text>
     <PageState :kind="section ? 'empty' : 'unavailable'" :title="section?.empty ?? '未找到对应记录类型'" :description="section?.description ?? '请返回我的页面重新选择。'" />
     <button v-if="section?.id === 'checklists'" class="nav-button" @click="openChecklistPreview">查看清单布局示例</button>

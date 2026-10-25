@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <text class="eyebrow">港易通 · 反馈</text>
+    <text class="eyebrow">香港百事通 · 反馈</text>
     <text class="title">告诉我们你的建议</text>
     <UnavailableNotice description="功能建设中，表单仅展示布局，暂不能输入或提交。请勿填写证件、电话等个人信息。" />
     <ContentCard>

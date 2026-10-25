@@ -3,7 +3,11 @@ const { chromium } = require('playwright');
 const { expect } = require('playwright/test');
 const assert = require('node:assert/strict');
 const base = process.env.H5_TEST_BASE_URL || 'http://127.0.0.1:14174';
-const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['phone','电话卡办理'],['transport','交通指南'],['attractions','景点推荐'],['tax','税务指南']];
+const topics = [
+ ['bank','港卡办理'],['phone','电话卡办理'],['metro','地铁乘坐'],['attractions','景点推荐'],
+ ['identity','香港身份'],['housing','港房租售'],['education','香港教育'],['insurance','香港保险'],
+ ['mpf','强公积金'],['tax','税务办理'],['driving','驾驶证办理']
+];
 (async () => {
  const browser = await chromium.launch();
  try {
@@ -19,10 +23,11 @@ const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['pho
    await page.goto(base+'/#/pages/index/index');
    await expect(active().locator('.search')).toBeVisible();
    await expect(active().getByText(/推荐攻略|暂无已发布攻略|查看全部攻略|我的收藏与记录|赴港办事，先了解，再出发/)).toHaveCount(0);
-   const cards=active().locator('.task-card');await expect(cards).toHaveCount(6);
+   await expect(active().locator('.brand-name')).toHaveText('香港百事通');
+   const cards=active().locator('.task-card');await expect(cards).toHaveCount(11);
    await expect(active().getByText('查看全部工具 →',{exact:true})).toHaveCount(0);
    const boxes=await cards.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,right:r.right}}));
-   assert.equal(new Set(boxes.map(b=>Math.round(b.y))).size,2);
+   assert.equal(new Set(boxes.map(b=>Math.round(b.y))).size,4);
    assert.equal(new Set(boxes.map(b=>Math.round(b.x))).size,3);
    assert(boxes.every(b=>b.x>=0&&b.right<=width));
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
@@ -35,7 +40,7 @@ const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['pho
     await expect(active().getByText(/有用|无用|评论/)).toHaveCount(0);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
     await active().getByText('返回首页',{exact:true}).click();
-    await expect(active().locator('.task-card')).toHaveCount(6);
+    await expect(active().locator('.task-card')).toHaveCount(11);
    }
   }
   for(const [id,title] of topics) {
@@ -56,6 +61,6 @@ const topics = [['bank','港卡办理'],['talent','高才／优才申请'],['pho
   for(const label of ['最新','香港学校','香港政策']) await expect(active().getByText(label,{exact:true})).toBeVisible();
   assert(api.every(path=>path==='/api/guides'));
   assert.deepEqual(errors,[]);
-  console.log('PASS six topics, 2x3 layout at four widths, direct/reload/back, search/tabs, no voting or runtime errors');
+  console.log('PASS 11 topics, H5 three-column layout at four widths, direct/reload/back, search/tabs, no voting or runtime errors');
  } finally {await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

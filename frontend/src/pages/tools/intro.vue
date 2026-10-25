@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <view class="page-heading"><text class="eyebrow">港易通 / {{ tool?.label ?? '实用工具' }}</text><text class="edition">工具预览</text></view>
+    <view class="page-heading"><text class="eyebrow">香港百事通 / {{ tool?.label ?? '实用工具' }}</text><text class="edition">工具预览</text></view>
     <template v-if="tool">
       <view class="intro-hero"><text :class="['tool-icon', tool.id]">{{ tool.symbol }}</text><text class="title">{{ tool.title }}</text><text class="description muted">{{ tool.brief }}</text><text class="status-badge hero-status">筹备中 · 暂未开放</text></view>
       <view class="preview-panel"><text class="eyebrow">为你的下一步，提前做准备</text><text class="section-title spaced">{{ tool.purpose }}</text></view>

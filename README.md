@@ -1,10 +1,10 @@
 # hk-handbook
 
-**港易通**（暂定名）——第一次去香港，从这里开始。
+**香港百事通**——赴港生活大小事，一站轻松了解。
 
-面向赴港办事、工作、生活的内地用户，提供可核验攻略和主题导航。首页只提供搜索和六个主题入口，不加载推荐攻略；主题包括港卡办理、高才／优才申请、电话卡办理、交通指南、景点推荐、税务指南六个板块，两行三列；保留“首页 / 工具 / 攻略 / 我的”四 Tab。工具未来承载计算与比较类小工具，不做评论社区。
+面向赴港办事、工作、生活的内地用户，提供可核验攻略和主题导航。首页提供搜索和 11 个主题入口；H5 每行三列，微信小程序每行两列；保留“首页 / 工具 / 资讯 / 我的”四 Tab。工具未来承载计算与比较类小工具，不做评论社区。
 
-产品依据见 [PRD](docs/PRD.md)，逐板块规划方式见 [ROADMAP](docs/ROADMAP.md)。当前实现首页六主题独立空页面、攻略搜索／详情及原工具／我的框架；主题正文、公开有用／无用票数及具体工具尚未实现。后端包含数据库健康检查与内容查询，正式攻略包当前为空。微信小程序与 H5 共用前端代码。
+产品依据见 [PRD](docs/PRD.md)，逐板块规划方式见 [ROADMAP](docs/ROADMAP.md)。当前实现首页 11 个主题独立空页面、攻略搜索／详情及原工具／我的框架；主题正文、公开有用／无用票数及具体工具尚未实现。后端包含数据库健康检查与内容查询，正式攻略包当前为空。微信小程序与 H5 共用前端代码。
 
 日常任务入口：[按 Epic 分组查看任务](https://github.com/users/whyboy/projects/4/views/3) · [执行看板](https://github.com/users/whyboy/projects/4/views/4) · [Epic 总览](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Aepic%22) · [Task 列表](https://github.com/whyboy/hk-handbook/issues?q=is%3Aissue%20is%3Aopen%20label%3A%22type%3Atask%22)。打开 Epic 可查看其子任务与进度。
 

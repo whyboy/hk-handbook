@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <text class="eyebrow">港易通 · 资讯</text>
+    <text class="eyebrow">香港百事通 · 资讯</text>
     <text class="title">了解香港学校与政策变化</text>
     <text class="description intro">收录有明确来源和更新日期的学校与政策资讯。</text>
     <view class="categories" aria-label="资讯分类">
