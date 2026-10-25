@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <text class="eyebrow">港易通 · 攻略详情</text>
+    <text class="eyebrow">香港百事通 · 攻略详情</text>
     <PageState v-if="state === 'loading'" kind="loading" title="正在加载攻略" description="请稍候…" />
     <PageState v-else-if="state === 'error'" kind="error" title="攻略加载失败" :description="errorMessage">
       <button class="nav-button" @click="load">重试</button>

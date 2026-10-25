@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <text class="eyebrow">港易通 · 清单详情</text>
+    <text class="eyebrow">香港百事通 · 清单详情</text>
     <text class="title">{{ preview ? '清单布局示例' : '清单暂不可用' }}</text>
     <template v-if="preview">
       <text class="notice">框架示例 · 非个人清单。功能建设中，未生成实际步骤，不支持勾选或保存。</text>

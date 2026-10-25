@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="search-heading">
-      <view><text class="eyebrow">港易通 · 首页搜索</text><text class="title">搜索攻略</text></view>
+      <view><text class="eyebrow">香港百事通 · 首页搜索</text><text class="title">搜索攻略</text></view>
       <button class="close-button" @click="emit('close')">返回首页</button>
     </view>
     <form @submit="submitSearch"><view class="search-row">

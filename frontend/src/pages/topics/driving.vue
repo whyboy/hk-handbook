@@ -1,4 +1,4 @@
-<template><TopicPlaceholder title="高才／优才申请" /></template>
+<template><TopicPlaceholder title="驾驶证办理" /></template>
 <script setup lang="ts">
 import TopicPlaceholder from '@/components/TopicPlaceholder.vue'
 </script>

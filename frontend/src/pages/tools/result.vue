@@ -1,6 +1,6 @@
 <template>
   <PageContainer>
-    <view class="page-heading"><text class="eyebrow">港易通 / 工具预览</text><text class="edition">筹备中</text></view>
+    <view class="page-heading"><text class="eyebrow">香港百事通 / 工具预览</text><text class="edition">筹备中</text></view>
     <view class="intro-hero">
       <text :class="['tool-icon', tool?.id]">{{ tool?.symbol ?? '…' }}</text>
       <text class="title">{{ tool ? '准备好后，在这里相见' : '未找到对应工具' }}</text>
